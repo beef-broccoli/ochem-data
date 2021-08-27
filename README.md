@@ -9,7 +9,7 @@ Every reaction folder was divided into two sub-folders:
 - `mols`: a list of molecules categorized by reaction roles)
 - `rxns`: a list of reaction entries with multiple reaction components and yield). 
 
-Each subfolder (`ohe`, `mol2vec`, `mordred`) includes different descriptor encodings for the list of molecules or reaction entries
+Each subfolder (`ohe`, `mol2vec`, `mordred`...) includes different descriptor encodings for the list of molecules or reaction entries
 
 ## Publications for reaction data: 
 
