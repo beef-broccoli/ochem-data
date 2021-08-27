@@ -16,7 +16,7 @@ Each subfolder (`ohe`, `mol2vec`, `mordred`) includes different descriptor encod
 - deoxyF: [Deoxyfluorination with Sulfonyl Fluorides: Navigating Reaction Space with Machine Learning](https://pubs.acs.org/doi/10.1021/jacs.8b01523)
 - Vbur: [Linking Mechanistic Analysis of Catalytic Reactivity Cliffs to Ligand Classification](https://chemrxiv.org/engage/chemrxiv/article-details/60c758aabdbb89d828a3ade9)
 
-## Descriptor sets: 
+## Publications for escriptor sets: 
 
 - [Mordred: a molecular descriptor calculator](https://jcheminf.biomedcentral.com/articles/10.1186/s13321-018-0258-y)
 - [Mol2vec: Unsupervised Machine Learning Approach with Chemical Intuition](https://pubs.acs.org/doi/full/10.1021/acs.jcim.7b00616)
