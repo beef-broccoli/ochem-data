@@ -1,5 +1,5 @@
 # ochem-data
-This repo includes published organic chemistry data. 
+This repo compiles published organic chemistry data. 
 
 ### Publication list: 
 
