@@ -1,6 +1,16 @@
 # ochem-data
 This repo compiles published organic chemistry data, including raw data and calculated descriptor sets for molecules and reactions. 
 
+## File structure: 
+
+Each folder contains one reaction (see publication list for details). 
+
+Every reaction folder was divided into two sub-folders: 
+- `mols`: a list of molecules categorized by reaction roles)
+- `rxns`: a list of reaction entries with multiple reaction components and yield). 
+
+Each subfolder (`ohe`, `mol2vec`, `mordred`) includes different descriptor encodings for the list of molecules or reaction entries
+
 ## Publication list: 
 
 - deoxyF: [Deoxyfluorination with Sulfonyl Fluorides: Navigating Reaction Space with Machine Learning](https://pubs.acs.org/doi/10.1021/jacs.8b01523)
