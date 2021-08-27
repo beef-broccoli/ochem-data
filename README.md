@@ -9,6 +9,18 @@ Every reaction folder was divided into two sub-folders:
 - `mols`: a list of molecules categorized by reaction roles)
 - `rxns`: a list of reaction entries with multiple reaction components and yield). 
 
+## Reading data directly from this repo
+
+  ```Py
+  import pandas as pd
+  
+  # change file path accordingly
+  PATH = 'https://raw.githubusercontent.com/beef-broccoli/ochem-data/main/deoxyF/paper-dft/train.csv'
+  df = pd.read_csv(PATH)
+  
+  # do things with df...
+  ```
+  
 Each subfolder (`ohe`, `mol2vec`, `mordred`...) includes different descriptor encodings for the list of molecules or reaction entries
 
 ## Publications for reaction data: 
@@ -23,15 +35,4 @@ Each subfolder (`ohe`, `mol2vec`, `mordred`...) includes different descriptor en
 - [alvaDesc](https://www.alvascience.com/alvadesc/)
 - Kraken: [A Comprehensive Discovery Platform for Organophosphorus Ligands for Catalysis](https://chemrxiv.org/engage/chemrxiv/article-details/60c757f9702a9bdb7018cbd4)
 
-## Reading data directly from this repo
 
-  ```Py
-  import pandas as pd
-  
-  # change file path accordingly
-  PATH = 'https://raw.githubusercontent.com/beef-broccoli/ochem-data/main/deoxyF/paper-dft/train.csv'
-  df = pd.read_csv(PATH)
-  
-  # do things with df...
-  ```
-  
