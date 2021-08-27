@@ -1,0 +1,6 @@
+fluoride_SMILES
+ClC1=CC=C(S(=O)(F)=O)C=C1
+O=S(C1=CC=CC=N1)(F)=O
+O=S(C1=CC=C(C(F)(F)F)C=C1)(F)=O
+O=S(C1=CC=C([N+]([O-])=O)C=C1)(F)=O
+FC(C(F)(S(=O)(F)=O)F)(F)C(F)(F)C(F)(F)F
