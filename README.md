@@ -21,6 +21,7 @@ Each subfolder (`ohe`, `mol2vec`, `mordred`) includes different descriptor encod
 - [Mordred: a molecular descriptor calculator](https://jcheminf.biomedcentral.com/articles/10.1186/s13321-018-0258-y)
 - [Mol2vec: Unsupervised Machine Learning Approach with Chemical Intuition](https://pubs.acs.org/doi/full/10.1021/acs.jcim.7b00616)
 - [alvaDesc](https://www.alvascience.com/alvadesc/)
+- Kraken: [A Comprehensive Discovery Platform for Organophosphorus Ligands for Catalysis](https://chemrxiv.org/engage/chemrxiv/article-details/60c757f9702a9bdb7018cbd4)
 
 ## Reading data directly from this repo
 
