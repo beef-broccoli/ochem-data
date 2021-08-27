@@ -9,9 +9,13 @@ This repo compiles published organic chemistry data, including raw data and calc
 
 ## Reading data directly from this repo
 
-  `import pandas as pd`
+  ```Py
+  import pandas as pd
   
-  `PATH = 'https://raw.githubusercontent.com/beef-broccoli/ochem-data/main/deoxyF/paper-dft/train.csv'`
+  # change file path accordingly
+  PATH = 'https://raw.githubusercontent.com/beef-broccoli/ochem-data/main/deoxyF/paper-dft/train.csv'
+  df = pd.read_csv(PATH)
   
-  `df = pd.read_csv(PATH)`
+  # do things with df...
+  ```
   
