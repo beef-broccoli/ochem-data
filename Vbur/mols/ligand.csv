@@ -1,91 +1,91 @@
-smiles,name,,,,,
-CN(c1cccc(c1c1ccccc1P(C1CCCCC1)C1CCCCC1)N(C)C)C,CPhos,,,,,
-C1CCC(CC1)P(c1ccccc1c1ccccc1)C1CCCCC1,CyJohnPhos,,,,,
-C1[C@@H]2C[C@@H]3C[C@H]1C[C@](C2)(C3)P([C@]12C[C@H]3C[C@@H](C2)C[C@@H](C1)C3)[C@]12C[C@H]3C[C@@H](C2)C[C@@H](C1)C3,PAd3,,,,,
-CC(P(C(C)(C)C)C(C)(C)C)(C)C,PtBu3,,,,,
-CCCCP([C@]12C[C@H]3C[C@@H](C2)C[C@@H](C1)C3)[C@]12C[C@H]3C[C@@H](C2)C[C@@H](C1)C3,"PAd2nBu, CataCXium A",,,,,
-C1CCC(CC1)P(C1CCCCC1)C1CCCCC1,PCy3,,,,,
-CC(CP(C(C)(C)C)C(C)(C)C)(C)C,PtBu2neopentyl,,,,,
-CP(C(C)(C)C)C(C)(C)C,PtBu2Me,,,,,
-CCCCP(CCCC)CCCC,PnBu3,,,,,
-CCP(CC)CC,PEt3,,,,,
-CP(C)C,PMe3,,,,,
-CC(P(C(C)(C)C)C1CCCCC1)(C)C,PtBu2Cy,,,,,
-CC(P(C1CCCCC1)C1CCCCC1)(C)C,PtBuCy2,,,,,
-C1CCC(CC1)P(c1cccn1c1ccccc1)C1CCCCC1,"NPh-Pyrrole-PCy2, CataCXiumPCy",,,,,
-COc1cccc(c1P(c1c(OC)cccc1OC)c1c(OC)cccc1OC)OC,P(26OMePh)3,,,,,
-C1[C@@H]2C[C@@H]3C[C@H]1C[C@](C2)(C3)P([C@]12C[C@H]3C[C@@H](C2)C[C@@H](C1)C3)Cc1ccccc1,"PAd2Bn, cataCXium Abn",,,,,
-P(CC1=CC=CC=C1)(CC2=CC=CC=C2)CC3=CC=CC=C3,PBn3,,,,,
-C1CCC(CC1)P(c1ccccc1)C1CCCCC1,PCy2Ph,,,,,
-C1CCC(C1)P(C1CCCC1)C1CCCC1,PCyp3,,,,,
-CC(P(C(C)C)C(C)C)C,PiPr3,,,,,
-Cc1cccc(c1)P(c1cccc(c1)C)c1cccc(c1)C,PmTol3,,,,,
-CCCCP(C(C)(C)C)C(C)(C)C,PnButBu2,,,,,
-COc1ccc(c(c1c1c(cc(cc1C(C)C)C(C)C)C(C)C)P(C(C)(C)C)C(C)(C)C)OC,tBuBrettPhos,,,,,
-CC(c1cc(cc(c1c1ccccc1P(C(C)(C)C)C(C)(C)C)C(C)C)C(C)C)C,tBuXPhos,,,,,
-COc1ccc(c(c1P(C(C)(C)C)C(C)(C)C)c1c(cc(cc1C(C)C)C(C)C)C(C)C)C,RockPhos,,,,,
-COc1ccc(c(c1P(c1cc(cc(c1)C(F)(F)F)C(F)(F)F)c1cc(cc(c1)C(F)(F)F)C(F)(F)F)c1c(cc(cc1C(C)C)C(C)C)C(C)C)OC,JackiePhos = (35CF3)2PhBrettPhos,,,,,
-Cc1ccc(cc1)P(c1ccccc1)c1ccccc1,PPh2(4-Me-Ph),,,,,
-Fc1cccc(c1)P(c1cccc(c1)F)c1cccc(c1)F,P(3-FPh)3,,,,,
-N#CCCP(CCC#N)CCC#N,P(CH2CH2CN)3,,,,,
-CC(c1cc(cc(c1)C(C)(C)C)P(c1cc(cc(c1)C(C)(C)C)C(C)(C)C)C1CCCC1)(C)C,"PCyp(3,5-tBu2-Ph)2",,,,,
-CC(c1cc(cc(c1)C(C)(C)C)P(c1cc(cc(c1)C(C)(C)C)C(C)(C)C)C1CCCCC1)(C)C,"PCy(3,5-tBu2-Ph)2",,,,,
-CC(c1cc(cc(c1c1cc(cc(c1)c1c(cc(cc1C(C)C)C(C)C)C(C)C)P(C1CCCC1)C1CCCC1)C(C)C)C(C)C)C,"PCyp2(3,5-TRIP2-Ph)",,,,,
-C1CCC(CC1)P(c1ccccc1)c1ccccc1,PCyPh2,,,,,
-Cc1cc(C)cc(c1P(c1c(C)cc(cc1C)C)C1CCCC1)C,PCypMes2,,,,,
-Cc1cc(cc(c1)C)P(c1cc(C)cc(c1)C)C1CCCC1,"PCyp(3,5-Me2-Ph)2",,,,,
-COc1ccc(cc1)P(c1ccc(cc1)OC)C1CCCCC1,PCy(4-OMe-Ph)2,,,,,
-CC(P(c1cc(cc(c1)C(C)(C)C)C(C)(C)C)c1cc(cc(c1)C(C)(C)C)C(C)(C)C)(C)C,"PtBu(3,5-tBu2-Ph)2",,,,,
-CC(c1cc(cc(c1)C(C)(C)C)P(c1cc(cc(c1)C(C)(C)C)C(C)(C)C)CC1CCCC1)(C)C,"PCH2Cyp(3,5-tBu2-Ph)2",,,,,
-CC(c1cc(cc(c1c1cc(cc(c1)c1c(cc(cc1C(C)C)C(C)C)C(C)C)P(C1CCCCC1)C1CCCCC1)C(C)C)C(C)C)C,"PCy2(3,5-TRIP2-Ph)",,,,,
-COc1ccc(cc1)P(C1CCCC1)C1CCCC1,PCyp2(4-OMe-Ph),,,,,
-CC(c1cc(cc(c1c1cc(cc(c1)c1c(cc(cc1C(C)(C)C)C(C)(C)C)C(C)(C)C)P(C1CCCC1)C1CCCC1)C(C)(C)C)C(C)(C)C)(C)C,"PCyp2(3,5-(2,4,6-tBu3-Ph)2-Ph)",,,,,
-Cc1ccccc1P(c1ccccc1C)C1CCCCC1,PCyoTol2,,,,,
-Cc1cc(C)c(c(c1)C)P(c1cc(cc(c1)C(C)(C)C)C(C)(C)C)C1CCCC1,"PCypMes(3,5-tBu2-Ph)",,,,,
-CC(c1cc(cc(c1)C(C)(C)C)P(c1cc(cc(c1)C(C)(C)C)C(C)(C)C)[C@@H]1C[C@@H]2C[C@H]1C=C2)(C)C,"P(exo-norbornenyl)(3,5-tBu2-Ph)2",,,,,
-Cc1cc(C)cc(c1c1cc(cc(c1)c1c(C)cc(cc1C)C)P(c1cc(cc(c1)c1c(C)cc(cc1C)C)c1c(C)cc(cc1C)C)C1CCCC1)C,"PCyp(3,5-Mes2-Ph)2",,,,,
-C1CCC(C1)P(c1cc2CCCN3c2c(c1)CCC3)c1cc2CCCN3c2c(c1)CCC3,PCyp(9THPQ)2,,,,,
-CC(c1cc(C(C)C)c(c(c1)C(C)C)c1cc(cc(c1)c1c(cc(cc1C(C)C)C(C)C)C(C)C)P(c1cc(cc(c1)C(C)(C)C)C(C)(C)C)c1cc(cc(c1)C(C)(C)C)C(C)(C)C)C,"P(3,5-tBu2-Ph)2(3,5-TRIP2-Ph)",,,,,
-CC(c1cc(cc(c1)C(C)(C)C)P(c1cc(cc(c1)C(C)(C)C)C(C)(C)C)c1ccccc1)(C)C,"PPh(3,5-tBu2-Ph)2",,,,,
-P(c1c(cc(cc1)C)C)(c1c(cc(cc1)C)C)c1c(cc(cc1)C)C,"P(2,4-Me2-Ph)3",,,,,
-c1ccc2c(c1)c1c(p2c2ccccc2)cccc1,PhDBP Dibenzophosphole-Ph,,,,,
-P(c1cc(ccc1)Cl)(c1cc(ccc1)Cl)c1cc(ccc1)Cl,P(3-Cl-Ph)3,,,,,
-P(CCCCCCCC)(CCCCCCCC)CCCCCCCC,P(nOct)3,,,,,
-P12CN3CN(C1)CN(C2)C3,Triazaphosphaadamantane PTA,,,,,
-P(c1cc(ccc1)OC)(c1cc(ccc1)OC)c1cc(ccc1)OC,P(3-OMePh)3,,,,,
-P(CC=C)(CC=C)CC=C,PAllyl3,,,,,
-P(CC(C)C)(CC(C)C)CC(C)C,P(iBu)3,,,,,
-P(c1c(cccc1)Br)(c1ccccc1)c1ccccc1,PPh2(2-Br-Ph),,,,,
-P(c1c(cccc1)C)(c1ccccc1)c1ccccc1,PPh2oTol,,,,,
-P(C(C)(C)C)(C(C)(C)C)c1c(c2c(cc1)cccc2)c1c2c(ccc1)cccc2,TrixiePhos (PtBu2(binaphthyl)),,,,,
-P(C1CCCCC1)(C1CCCCC1)c1c(cccc1)c1c(cccc1)C,MePhos,,,,,
-P(C(C)(C)C)(C(C)(C)C)c1c(cccc1)c1c(cccc1)C,tBuMePhos,,,,,
-P(C(C)(C)C)(C(C)(C)C)c1c(cccc1)c1c(cccc1)N(C)C,tBuDavePhos,,,,,
-P(C(C)(C)C)(C(C)(C)C)c1n(ncc1)c1c(n(nc1c1ccccc1)c1ccccc1)c1ccccc1,Bippyphos,,,,,
-P(C(C)(C)C)(C(C)(C)C)c1c(cccc1)n1nc(cc1c1ccccc1)c1ccccc1,TrippyPhos PtBu2(2-Ph2pyrazol-1-yl-Ph),,,,,
-P(C(C)(C)C)(C(C)(C)C)c1n(c2c(c1)cccc2)c1ccccc1,"PtBu2(N-Ph-indol-2-yl), cataCXiumPIntB",,,,,
-P(C(C)(C)C)(C(C)(C)C)c1n(ccc1)c1ccccc1,"NPh-Pyrrole-PtBu2, CataCXium PtB",,,,,
-P(C1c2c(cccc2)C=Cc2c1cccc2)(c1ccccc1)c1ccccc1,tropPPh2,,,,,
-P(C1CCCCC1)(C1CCCCC1)c1n(ccn1)c1c(cc(cc1C)C)C,Cataxium PICy,,,,,
-P(C(C)(C)C)(C(C)(C)C)c1n(ccc1)c1c(cccc1)OC,"N(2-OMe-Ph)-Pyrrole-PtBu2, cataCXiumPOMetB",,,,,
-P(C1CCCCC1)(C1CCCCC1)c1n(ccc1)c1c(cccc1)OC,"N(2-OMe-Ph)-Pyrrole-PCy2, cataCXiumPOMeCy",,,,,
-P(C1CCCCC1)(C1CCCCC1)c1n(c2c(c1)cccc2)c1ccccc1,cataCXiumPInCy,,,,,
-P(C1CCCCC1)(C1CCCCC1)c1c(cccc1)c1c(cc(cc1OC)OC)OC,"1-Cy2P-2’,4’,6’-MeO-Ph2",,,,,
-P(C(C)(C)C)(C(C)(C)C)c1n(ncc1)c1c2c(ccc1)cccc2,NappyPhos PtBu2(N-1Nap-pyrazol-5-yl),,,,,
-P(C1CCCCC1)(C1CCCCC1)c1n(ncc1)c1c(n(nc1c1ccccc1)c1ccccc1)c1ccccc1,Cy-BippyPhos,,,,,
-P(C1CCCCC1)(C1CCCCC1)c1c(cccc1)n1c2c(c3c1cccc3)cccc2,Cy-PhenCarPhos,,,,,
-P([C@]12C[C@@H]3C[C@H](C1)C[C@H](C2)C3)([C@]12C[C@@H]3C[C@H](C1)C[C@H](C2)C3)c1n(ncc1)c1c(n(nc1c1ccccc1)c1ccccc1)c1ccccc1,AdBippyphos,,,,,
-P(C1c2c(cccc2)C=Cc2c1cccc2)(C1c2c(cccc2)C=Cc2c1cccc2)c1ccccc1,trop2PPh,,,,,
-FC(F)(F)C(F)(F)C(F)(F)C(C(F)(F)F)(C(F)(F)F)Cc1ccc(cc1)P(c3ccc(cc3)CC(C(F)(F)F)(C(F)(F)F)C(F)(F)C(F)(F)C(F)(F)F)c2ccccc2,"PPh (4-(2,2-(CF3)2-F7pent)-Ph)2",,,,,
-CC(C1=CC(P(C2=CC(C(C)(C)C)=CC(C(C)(C)C)=C2)C3=CC(C(C)(C)C)=CC(C(C)(C)C)=C3)=CC(C(C)(C)C)=C1)(C)C,"P(3,5-tBu2-Ph)3",,,,,
-O=CC1=CC=CC=C1P(C2=CC(C(C)(C)C)=C(OC)C(C(C)(C)C)=C2)C3=CC(C(C)(C)C)=C(OC)C(C(C)(C)C)=C3,"P(3,5tBu2-4-OMe-Ph)2(2-CHO-Ph)",,,,,
-O=CC1=CC=CC=C1P(C2=CC(C)=CC(C)=C2)C3=CC(C)=CC(C)=C3,"P(3,5Me2-Ph)2(2-CHO-Ph)",,,,,
-c1ccc(cc1)P(c2ccccc2)c3ccccc3C#N,Ph2P(2-PhCN),,,,,
-COC(=O)CCP(CCC(=O)OC)CCC(=O)OC,(MeO2CCH2CH2)3P,,,,,
-OCP(CO)CO,(HOCH2)3P,,,,,
-FC(C1=CC(P(C2=CC=CC(C(O)=O)=C2)C3=CC=CC(C(F)(F)F)=C3)=CC=C1)(F)F,"m-MiranPhos, P(3-CO2H-Ph)(3-CF3-Ph)2",,,,,
-O=C(O)C1=CC(P(C2=CC=CC(C(F)(F)F)=C2)C3=CC=CC(C(O)=O)=C3)=CC=C1,"m-Miran2Phos, P(3-CO2H-Ph)2(3-CF3-Ph)",,,,,
-O=C(C(C=C1)=CC=C1P(C2=CC=C(C(F)(F)F)C=C2)C3=CC=C(C(F)(F)F)C=C3)O,"p-MiranPhos, P(4-CO2H-Ph)(4-CF3-Ph)2",,,,,
-O=C(C(C=C1)=CC=C1P(C2=CC=C(C(F)(F)F)C=C2)C3=CC=C(C(O)=O)C=C3)O,"p-Miran2Phos, P(4-CO2H-Ph)2(4-CF3-Ph)",,,,,
-O=CC1=CC=CC=C1P(C2=CC=CC=C2)C3=CC=CC=C3,PPh2(2-CHO-Ph),,,,,
-P(CCCO)(CCCO)CCCO,P(CH2CH2CH2OH)3,,,,,
+,smiles,name
+0,CN(c1cccc(c1c1ccccc1P(C1CCCCC1)C1CCCCC1)N(C)C)C,CPhos
+1,C1CCC(CC1)P(c1ccccc1c1ccccc1)C1CCCCC1,CyJohnPhos
+2,C1[C@@H]2C[C@@H]3C[C@H]1C[C@](C2)(C3)P([C@]12C[C@H]3C[C@@H](C2)C[C@@H](C1)C3)[C@]12C[C@H]3C[C@@H](C2)C[C@@H](C1)C3,PAd3
+3,CC(P(C(C)(C)C)C(C)(C)C)(C)C,PtBu3
+4,CCCCP([C@]12C[C@H]3C[C@@H](C2)C[C@@H](C1)C3)[C@]12C[C@H]3C[C@@H](C2)C[C@@H](C1)C3,"PAd2nBu, CataCXium A"
+5,C1CCC(CC1)P(C1CCCCC1)C1CCCCC1,PCy3
+6,CC(CP(C(C)(C)C)C(C)(C)C)(C)C,PtBu2neopentyl
+7,CP(C(C)(C)C)C(C)(C)C,PtBu2Me
+8,CCCCP(CCCC)CCCC,PnBu3
+9,CCP(CC)CC,PEt3
+10,CP(C)C,PMe3
+11,CC(P(C(C)(C)C)C1CCCCC1)(C)C,PtBu2Cy
+12,CC(P(C1CCCCC1)C1CCCCC1)(C)C,PtBuCy2
+13,C1CCC(CC1)P(c1cccn1c1ccccc1)C1CCCCC1,"NPh-Pyrrole-PCy2, CataCXiumPCy"
+14,COc1cccc(c1P(c1c(OC)cccc1OC)c1c(OC)cccc1OC)OC,P(26OMePh)3
+15,C1[C@@H]2C[C@@H]3C[C@H]1C[C@](C2)(C3)P([C@]12C[C@H]3C[C@@H](C2)C[C@@H](C1)C3)Cc1ccccc1,"PAd2Bn, cataCXium Abn"
+16,P(CC1=CC=CC=C1)(CC2=CC=CC=C2)CC3=CC=CC=C3,PBn3
+17,C1CCC(CC1)P(c1ccccc1)C1CCCCC1,PCy2Ph
+18,C1CCC(C1)P(C1CCCC1)C1CCCC1,PCyp3
+19,CC(P(C(C)C)C(C)C)C,PiPr3
+20,Cc1cccc(c1)P(c1cccc(c1)C)c1cccc(c1)C,PmTol3
+21,CCCCP(C(C)(C)C)C(C)(C)C,PnButBu2
+22,COc1ccc(c(c1c1c(cc(cc1C(C)C)C(C)C)C(C)C)P(C(C)(C)C)C(C)(C)C)OC,tBuBrettPhos
+23,CC(c1cc(cc(c1c1ccccc1P(C(C)(C)C)C(C)(C)C)C(C)C)C(C)C)C,tBuXPhos
+24,COc1ccc(c(c1P(C(C)(C)C)C(C)(C)C)c1c(cc(cc1C(C)C)C(C)C)C(C)C)C,RockPhos
+25,COc1ccc(c(c1P(c1cc(cc(c1)C(F)(F)F)C(F)(F)F)c1cc(cc(c1)C(F)(F)F)C(F)(F)F)c1c(cc(cc1C(C)C)C(C)C)C(C)C)OC,JackiePhos = (35CF3)2PhBrettPhos
+26,Cc1ccc(cc1)P(c1ccccc1)c1ccccc1,PPh2(4-Me-Ph)
+27,Fc1cccc(c1)P(c1cccc(c1)F)c1cccc(c1)F,P(3-FPh)3
+28,N#CCCP(CCC#N)CCC#N,P(CH2CH2CN)3
+29,CC(c1cc(cc(c1)C(C)(C)C)P(c1cc(cc(c1)C(C)(C)C)C(C)(C)C)C1CCCC1)(C)C,"PCyp(3,5-tBu2-Ph)2"
+30,CC(c1cc(cc(c1)C(C)(C)C)P(c1cc(cc(c1)C(C)(C)C)C(C)(C)C)C1CCCCC1)(C)C,"PCy(3,5-tBu2-Ph)2"
+31,CC(c1cc(cc(c1c1cc(cc(c1)c1c(cc(cc1C(C)C)C(C)C)C(C)C)P(C1CCCC1)C1CCCC1)C(C)C)C(C)C)C,"PCyp2(3,5-TRIP2-Ph)"
+32,C1CCC(CC1)P(c1ccccc1)c1ccccc1,PCyPh2
+33,Cc1cc(C)cc(c1P(c1c(C)cc(cc1C)C)C1CCCC1)C,PCypMes2
+34,Cc1cc(cc(c1)C)P(c1cc(C)cc(c1)C)C1CCCC1,"PCyp(3,5-Me2-Ph)2"
+35,COc1ccc(cc1)P(c1ccc(cc1)OC)C1CCCCC1,PCy(4-OMe-Ph)2
+36,CC(P(c1cc(cc(c1)C(C)(C)C)C(C)(C)C)c1cc(cc(c1)C(C)(C)C)C(C)(C)C)(C)C,"PtBu(3,5-tBu2-Ph)2"
+37,CC(c1cc(cc(c1)C(C)(C)C)P(c1cc(cc(c1)C(C)(C)C)C(C)(C)C)CC1CCCC1)(C)C,"PCH2Cyp(3,5-tBu2-Ph)2"
+38,CC(c1cc(cc(c1c1cc(cc(c1)c1c(cc(cc1C(C)C)C(C)C)C(C)C)P(C1CCCCC1)C1CCCCC1)C(C)C)C(C)C)C,"PCy2(3,5-TRIP2-Ph)"
+39,COc1ccc(cc1)P(C1CCCC1)C1CCCC1,PCyp2(4-OMe-Ph)
+40,CC(c1cc(cc(c1c1cc(cc(c1)c1c(cc(cc1C(C)(C)C)C(C)(C)C)C(C)(C)C)P(C1CCCC1)C1CCCC1)C(C)(C)C)C(C)(C)C)(C)C,"PCyp2(3,5-(2,4,6-tBu3-Ph)2-Ph)"
+41,Cc1ccccc1P(c1ccccc1C)C1CCCCC1,PCyoTol2
+42,Cc1cc(C)c(c(c1)C)P(c1cc(cc(c1)C(C)(C)C)C(C)(C)C)C1CCCC1,"PCypMes(3,5-tBu2-Ph)"
+43,CC(c1cc(cc(c1)C(C)(C)C)P(c1cc(cc(c1)C(C)(C)C)C(C)(C)C)[C@@H]1C[C@@H]2C[C@H]1C=C2)(C)C,"P(exo-norbornenyl)(3,5-tBu2-Ph)2"
+44,Cc1cc(C)cc(c1c1cc(cc(c1)c1c(C)cc(cc1C)C)P(c1cc(cc(c1)c1c(C)cc(cc1C)C)c1c(C)cc(cc1C)C)C1CCCC1)C,"PCyp(3,5-Mes2-Ph)2"
+45,C1CCC(C1)P(c1cc2CCCN3c2c(c1)CCC3)c1cc2CCCN3c2c(c1)CCC3,PCyp(9THPQ)2
+46,CC(c1cc(C(C)C)c(c(c1)C(C)C)c1cc(cc(c1)c1c(cc(cc1C(C)C)C(C)C)C(C)C)P(c1cc(cc(c1)C(C)(C)C)C(C)(C)C)c1cc(cc(c1)C(C)(C)C)C(C)(C)C)C,"P(3,5-tBu2-Ph)2(3,5-TRIP2-Ph)"
+47,CC(c1cc(cc(c1)C(C)(C)C)P(c1cc(cc(c1)C(C)(C)C)C(C)(C)C)c1ccccc1)(C)C,"PPh(3,5-tBu2-Ph)2"
+48,P(c1c(cc(cc1)C)C)(c1c(cc(cc1)C)C)c1c(cc(cc1)C)C,"P(2,4-Me2-Ph)3"
+49,c1ccc2c(c1)c1c(p2c2ccccc2)cccc1,PhDBP Dibenzophosphole-Ph
+50,P(c1cc(ccc1)Cl)(c1cc(ccc1)Cl)c1cc(ccc1)Cl,P(3-Cl-Ph)3
+51,P(CCCCCCCC)(CCCCCCCC)CCCCCCCC,P(nOct)3
+52,P12CN3CN(C1)CN(C2)C3,Triazaphosphaadamantane PTA
+53,P(c1cc(ccc1)OC)(c1cc(ccc1)OC)c1cc(ccc1)OC,P(3-OMePh)3
+54,P(CC=C)(CC=C)CC=C,PAllyl3
+55,P(CC(C)C)(CC(C)C)CC(C)C,P(iBu)3
+56,P(c1c(cccc1)Br)(c1ccccc1)c1ccccc1,PPh2(2-Br-Ph)
+57,P(c1c(cccc1)C)(c1ccccc1)c1ccccc1,PPh2oTol
+58,P(C(C)(C)C)(C(C)(C)C)c1c(c2c(cc1)cccc2)c1c2c(ccc1)cccc2,TrixiePhos (PtBu2(binaphthyl))
+59,P(C1CCCCC1)(C1CCCCC1)c1c(cccc1)c1c(cccc1)C,MePhos
+60,P(C(C)(C)C)(C(C)(C)C)c1c(cccc1)c1c(cccc1)C,tBuMePhos
+61,P(C(C)(C)C)(C(C)(C)C)c1c(cccc1)c1c(cccc1)N(C)C,tBuDavePhos
+62,P(C(C)(C)C)(C(C)(C)C)c1n(ncc1)c1c(n(nc1c1ccccc1)c1ccccc1)c1ccccc1,Bippyphos
+63,P(C(C)(C)C)(C(C)(C)C)c1c(cccc1)n1nc(cc1c1ccccc1)c1ccccc1,TrippyPhos PtBu2(2-Ph2pyrazol-1-yl-Ph)
+64,P(C(C)(C)C)(C(C)(C)C)c1n(c2c(c1)cccc2)c1ccccc1,"PtBu2(N-Ph-indol-2-yl), cataCXiumPIntB"
+65,P(C(C)(C)C)(C(C)(C)C)c1n(ccc1)c1ccccc1,"NPh-Pyrrole-PtBu2, CataCXium PtB"
+66,P(C1c2c(cccc2)C=Cc2c1cccc2)(c1ccccc1)c1ccccc1,tropPPh2
+67,P(C1CCCCC1)(C1CCCCC1)c1n(ccn1)c1c(cc(cc1C)C)C,Cataxium PICy
+68,P(C(C)(C)C)(C(C)(C)C)c1n(ccc1)c1c(cccc1)OC,"N(2-OMe-Ph)-Pyrrole-PtBu2, cataCXiumPOMetB"
+69,P(C1CCCCC1)(C1CCCCC1)c1n(ccc1)c1c(cccc1)OC,"N(2-OMe-Ph)-Pyrrole-PCy2, cataCXiumPOMeCy"
+70,P(C1CCCCC1)(C1CCCCC1)c1n(c2c(c1)cccc2)c1ccccc1,cataCXiumPInCy
+71,P(C1CCCCC1)(C1CCCCC1)c1c(cccc1)c1c(cc(cc1OC)OC)OC,"1-Cy2P-2’,4’,6’-MeO-Ph2"
+72,P(C(C)(C)C)(C(C)(C)C)c1n(ncc1)c1c2c(ccc1)cccc2,NappyPhos PtBu2(N-1Nap-pyrazol-5-yl)
+73,P(C1CCCCC1)(C1CCCCC1)c1n(ncc1)c1c(n(nc1c1ccccc1)c1ccccc1)c1ccccc1,Cy-BippyPhos
+74,P(C1CCCCC1)(C1CCCCC1)c1c(cccc1)n1c2c(c3c1cccc3)cccc2,Cy-PhenCarPhos
+75,P([C@]12C[C@@H]3C[C@H](C1)C[C@H](C2)C3)([C@]12C[C@@H]3C[C@H](C1)C[C@H](C2)C3)c1n(ncc1)c1c(n(nc1c1ccccc1)c1ccccc1)c1ccccc1,AdBippyphos
+76,P(C1c2c(cccc2)C=Cc2c1cccc2)(C1c2c(cccc2)C=Cc2c1cccc2)c1ccccc1,trop2PPh
+77,FC(F)(F)C(F)(F)C(F)(F)C(C(F)(F)F)(C(F)(F)F)Cc1ccc(cc1)P(c3ccc(cc3)CC(C(F)(F)F)(C(F)(F)F)C(F)(F)C(F)(F)C(F)(F)F)c2ccccc2,"PPh (4-(2,2-(CF3)2-F7pent)-Ph)2"
+78,CC(C1=CC(P(C2=CC(C(C)(C)C)=CC(C(C)(C)C)=C2)C3=CC(C(C)(C)C)=CC(C(C)(C)C)=C3)=CC(C(C)(C)C)=C1)(C)C,"P(3,5-tBu2-Ph)3"
+79,O=CC1=CC=CC=C1P(C2=CC(C(C)(C)C)=C(OC)C(C(C)(C)C)=C2)C3=CC(C(C)(C)C)=C(OC)C(C(C)(C)C)=C3,"P(3,5tBu2-4-OMe-Ph)2(2-CHO-Ph)"
+80,O=CC1=CC=CC=C1P(C2=CC(C)=CC(C)=C2)C3=CC(C)=CC(C)=C3,"P(3,5Me2-Ph)2(2-CHO-Ph)"
+81,c1ccc(cc1)P(c2ccccc2)c3ccccc3C#N,Ph2P(2-PhCN)
+82,COC(=O)CCP(CCC(=O)OC)CCC(=O)OC,(MeO2CCH2CH2)3P
+83,OCP(CO)CO,(HOCH2)3P
+84,FC(C1=CC(P(C2=CC=CC(C(O)=O)=C2)C3=CC=CC(C(F)(F)F)=C3)=CC=C1)(F)F,"m-MiranPhos, P(3-CO2H-Ph)(3-CF3-Ph)2"
+85,O=C(O)C1=CC(P(C2=CC=CC(C(F)(F)F)=C2)C3=CC=CC(C(O)=O)=C3)=CC=C1,"m-Miran2Phos, P(3-CO2H-Ph)2(3-CF3-Ph)"
+86,O=C(C(C=C1)=CC=C1P(C2=CC=C(C(F)(F)F)C=C2)C3=CC=C(C(F)(F)F)C=C3)O,"p-MiranPhos, P(4-CO2H-Ph)(4-CF3-Ph)2"
+87,O=C(C(C=C1)=CC=C1P(C2=CC=C(C(F)(F)F)C=C2)C3=CC=C(C(O)=O)C=C3)O,"p-Miran2Phos, P(4-CO2H-Ph)2(4-CF3-Ph)"
+88,O=CC1=CC=CC=C1P(C2=CC=CC=C2)C3=CC=CC=C3,PPh2(2-CHO-Ph)
+89,P(CCCO)(CCCO)CCCO,P(CH2CH2CH2OH)3
