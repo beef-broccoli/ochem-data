@@ -27,7 +27,7 @@ Each subfolder (`ohe`, `mol2vec`, `mordred`...) includes different descriptor en
 
 - deoxyF: [Deoxyfluorination with Sulfonyl Fluorides: Navigating Reaction Space with Machine Learning](https://pubs.acs.org/doi/10.1021/jacs.8b01523)
 - Vbur: [Linking Mechanistic Analysis of Catalytic Reactivity Cliffs to Ligand Classification](https://chemrxiv.org/engage/chemrxiv/article-details/60c758aabdbb89d828a3ade9)
-- Buchwald-Hartwig: [Predicting reaction performance in C–N cross-coupling using machine learning](https://www.science.org/doi/full/10.1126/science.aar5169?versioned=true)
+- CN: [Predicting reaction performance in C–N cross-coupling using machine learning](https://www.science.org/doi/full/10.1126/science.aar5169?versioned=true)
 
 ## Publications for descriptor sets: 
 
