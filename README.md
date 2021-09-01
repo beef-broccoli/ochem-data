@@ -14,9 +14,9 @@ Every reaction folder was divided into two sub-folders:
   ```Py
   import pandas as pd
   
-  # change file path accordingly
-  PATH = 'https://raw.githubusercontent.com/beef-broccoli/ochem-data/main/deoxyF/paper-dft/train.csv'
-  df = pd.read_csv(PATH)
+  REPO_PATH = 'https://raw.githubusercontent.com/beef-broccoli/ochem-data/main/'
+  FP = 'deoxyF/paper-dft/train.csv'  # change this  
+  df = pd.read_csv(REPO_PATH + FP)
   
   # do things with df...
   ```
