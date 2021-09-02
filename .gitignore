@@ -2,5 +2,5 @@
 *.xml
 *.iml
 .idea/**
-prep/**
 /CN/process.py
+/prep/
