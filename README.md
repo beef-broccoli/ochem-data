@@ -26,6 +26,11 @@ Each subfolder (`ohe`, `mol2vec`, `mordred`...) includes different descriptor en
 ## Publications for reaction data: 
 
 - deoxyF: [Deoxyfluorination with Sulfonyl Fluorides: Navigating Reaction Space with Machine Learning](https://pubs.acs.org/doi/10.1021/jacs.8b01523)
+
+<p align="center">
+  <img src=https://github.com/beef-broccoli/misc-files/blob/f370f89ab3370839df18bd79fa1f89a091ada630/ochem-data/deoxyF_scheme.png alt=asym_epox width=500/>
+</p>
+
 - Vbur: [Linking Mechanistic Analysis of Catalytic Reactivity Cliffs to Ligand Classification](https://chemrxiv.org/engage/chemrxiv/article-details/60c758aabdbb89d828a3ade9)
 - CN: [Predicting reaction performance in C–N cross-coupling using machine learning](https://www.science.org/doi/full/10.1126/science.aar5169?versioned=true)
 - asym_epox: [Ni/Photoredox-Catalyzed Enantioselective Cross-Electrophile Coupling of Styrene Oxides with Aryl Iodides](https://chemrxiv.org/engage/chemrxiv/article-details/60c7574abb8c1a7a333dc7d0)
@@ -35,6 +40,7 @@ Each subfolder (`ohe`, `mol2vec`, `mordred`...) includes different descriptor en
 </p>
 
 - CH-aryl-1: [Bayesian reaction optimization as a tool for chemical synthesis](https://www.nature.com/articles/s41586-021-03213-y)
+- Kraken: [A Comprehensive Discovery Platform for Organophosphorus Ligands for Catalysis](https://chemrxiv.org/engage/chemrxiv/article-details/60c757f9702a9bdb7018cbd4)
 
 ## Publications/resources for descriptor sets: 
 
