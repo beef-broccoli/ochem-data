@@ -1,0 +1,16 @@
+aryl_halide_number,product_smiles
+1.0,Cc1ccc(Nc2ccc(C(F)(F)F)cc2)cc1
+2.0,Cc1ccc(Nc2ccc(C(F)(F)F)cc2)cc1
+3.0,Cc1ccc(Nc2ccc(C(F)(F)F)cc2)cc1
+4.0,COc1ccc(Nc2ccc(C)cc2)cc1
+5.0,COc1ccc(Nc2ccc(C)cc2)cc1
+6.0,COc1ccc(Nc2ccc(C)cc2)cc1
+7.0,CCc1ccc(Nc2ccc(C)cc2)cc1
+8.0,CCc1ccc(Nc2ccc(C)cc2)cc1
+9.0,CCc1ccc(Nc2ccc(C)cc2)cc1
+10.0,Cc1ccc(Nc2ccccn2)cc1
+11.0,Cc1ccc(Nc2ccccn2)cc1
+12.0,Cc1ccc(Nc2ccccn2)cc1
+13.0,Cc1ccc(Nc2cccnc2)cc1
+14.0,Cc1ccc(Nc2cccnc2)cc1
+15.0,Cc1ccc(Nc2cccnc2)cc1

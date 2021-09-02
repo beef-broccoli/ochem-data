@@ -29,6 +29,7 @@ Each subfolder (`ohe`, `mol2vec`, `mordred`...) includes different descriptor en
 - Vbur: [Linking Mechanistic Analysis of Catalytic Reactivity Cliffs to Ligand Classification](https://chemrxiv.org/engage/chemrxiv/article-details/60c758aabdbb89d828a3ade9)
 - CN: [Predicting reaction performance in C–N cross-coupling using machine learning](https://www.science.org/doi/full/10.1126/science.aar5169?versioned=true)
 - asym_epox: [Ni/Photoredox-Catalyzed Enantioselective Cross-Electrophile Coupling of Styrene Oxides with Aryl Iodides](https://chemrxiv.org/engage/chemrxiv/article-details/60c7574abb8c1a7a333dc7d0)
+- CH-aryl-1: [Bayesian reaction optimization as a tool for chemical synthesis](https://www.nature.com/articles/s41586-021-03213-y)
 
 ## Publications/resources for descriptor sets: 
 
