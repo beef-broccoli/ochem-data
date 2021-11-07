@@ -10,19 +10,41 @@ import rdkit.Chem.rdMolDescriptors as rdMolDescriptors
 # TODO: multiple fields for names (Ph, CF3, tBu)
 # TODO: inchi support
 
-def lookup_kraken(name=None, smiles=None, cas=None):
+def lookup_kraken(cas=None, name=None, smiles=None, inchi=None):
 
     identifiers = pd.read_csv('identifiers.csv')
     identifiers['id'] = identifiers['id'].astype('int')
     identifiers['atomcount'] = identifiers['atomcount'].astype('int')
     results_df = pd.DataFrame()
 
+    def search_by_smiles(smi):
+
+        can_smiles_list = list(identifiers['can_smiles'].astype('str'))
+        can_smiles = Chem.CanonSmiles(smi)
+
+        results = [c for c in can_smiles_list if can_smiles == c]
+
+        if results:  # find smiles match, get results
+            temp_df = identifiers[identifiers['can_smiles'].isin(results)]
+        else:  # no smiles match, try to match with mw, atom count, formula
+            mol = Chem.MolFromSmiles(smi)
+            mol = Chem.AddHs(mol)
+            mw = Chem.rdMolDescriptors.CalcExactMolWt(mol)
+            atom_count = mol.GetNumAtoms()
+            formula = rdMolDescriptors.CalcMolFormula(mol)
+
+            temp_df = identifiers.loc[
+                (identifiers['atomcount'] == int(atom_count)) &
+                (identifiers['formula'] == str(formula))
+                ]
+
+        return temp_df
+
     # look up with cas first
     if cas is not None:
 
         if type(cas) != str:
-            print('Try again: need string for search value')
-            return None
+            raise TypeError('Search value must be a string!')
 
         cas_list1 = list(identifiers['cas_pr3'].astype('str'))
         results_1 = [c for c in cas_list1 if cas in c]
@@ -55,8 +77,7 @@ def lookup_kraken(name=None, smiles=None, cas=None):
     if name is not None:
 
         if type(name) != str:
-            print('Try again: need string for search value')
-            return None
+            raise TypeError('Search value must be a string!')
 
         name_list = list(identifiers['ligand'].astype('str'))
 
@@ -77,31 +98,27 @@ def lookup_kraken(name=None, smiles=None, cas=None):
     if smiles is not None:
 
         if type(smiles) != str:
-            print('Try again: need string for search value')
-            return None
+            raise TypeError('Search value must be a string!')
 
-        can_smiles_list = list(identifiers['can_smiles'].astype('str'))
-        can_smiles = Chem.CanonSmiles(smiles)
-
-        results = [c for c in can_smiles_list if can_smiles == c]
-
-        if results:  # find smiles match, get results
-            temp_df = identifiers[identifiers['can_smiles'].isin(results)]
-        else:  # no smiles match, try to match with mw, atom count, formula
-            mol = Chem.MolFromSmiles(smiles)
-            mol = Chem.AddHs(mol)
-            mw = Chem.rdMolDescriptors.CalcExactMolWt(mol)
-            atom_count = mol.GetNumAtoms()
-            formula = rdMolDescriptors.CalcMolFormula(mol)
-
-            temp_df = identifiers.loc[
-                (identifiers['atomcount'] == int(atom_count)) &
-                (identifiers['formula'] == str(formula))
-            ]
-
+        temp_df = search_by_smiles(smiles)
         results_df = pd.concat([results_df, temp_df])
+
         if len(results_df) == 1:  # only find one entry, return search result
             print('Found result by smiles')
+            return results_df[['ligand', 'id', 'can_smiles']]
+
+    if inchi is not None:
+
+        if type(inchi) != str:
+            raise TypeError('Search value must be a string!')
+
+        mol = Chem.MolFromInchi(inchi)
+        smi = Chem.MolToSmiles(mol)
+        temp_df = search_by_smiles(smi)
+        results_df = pd.concat([results_df, temp_df])
+
+        if len(results_df) == 1:  # only find one entry, return search result
+            print('Found result by inchi')
             return results_df[['ligand', 'id', 'can_smiles']]
 
     if len(results_df) == 0:
@@ -113,4 +130,5 @@ def lookup_kraken(name=None, smiles=None, cas=None):
 
 
 if __name__ == '__main__':
+    print(lookup_kraken())
     print('What are you trying to do')
