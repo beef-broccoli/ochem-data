@@ -1,6 +1,9 @@
 # ochem-data
 This repo compiles published organic chemistry data, including raw data and calculated descriptor sets for molecules and reactions. 
 
+## Latest update: 
+- 11-07-2021: added a search function for kraken ID with cas number, name or smiles. Check out the demo [here](https://github.com/beef-broccoli/ochem-data/blob/main/kraken/lookup_demo.ipynb)
+
 ## File structure: 
 
 Each folder contains one reaction (see publication list for details). 
@@ -59,9 +62,7 @@ Each subfolder (`ohe`, `mol2vec`, `mordred`...) includes different descriptor en
 
 <p align="center">
   <img src=https://github.com/beef-broccoli/misc-files/blob/60475f1bcbec6d5c7d400e5f5dab6f06eb993aea/ochem-data/kraken_scheme.png alt=kraken width=600/>
-</p>
-
-Supports a search function for kraken ID with cas number, name or smiles. Check out the demo here: 
+</p> 
 
 ## Publications/resources for descriptor sets: 
 
