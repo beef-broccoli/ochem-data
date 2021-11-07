@@ -7,6 +7,9 @@ import rdkit.Chem.rdMolDescriptors as rdMolDescriptors
 
 # search priority: cas -> name -> canonical smiles -> atom count and formula
 # Note 1: no salt in smiles
+# TODO: multiple fields for names (Ph, CF3, tBu)
+# TODO: inchi support
+
 def lookup_kraken(name=None, smiles=None, cas=None):
 
     identifiers = pd.read_csv('identifiers.csv')
