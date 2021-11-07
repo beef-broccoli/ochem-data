@@ -61,6 +61,8 @@ Each subfolder (`ohe`, `mol2vec`, `mordred`...) includes different descriptor en
   <img src=https://github.com/beef-broccoli/misc-files/blob/60475f1bcbec6d5c7d400e5f5dab6f06eb993aea/ochem-data/kraken_scheme.png alt=kraken width=600/>
 </p>
 
+Supports a search function for kraken ID with cas number, name or smiles. Check out the demo here: 
+
 ## Publications/resources for descriptor sets: 
 
 - [Mordred: a molecular descriptor calculator](https://jcheminf.biomedcentral.com/articles/10.1186/s13321-018-0258-y)
