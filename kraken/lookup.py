@@ -113,10 +113,4 @@ def lookup_kraken(name=None, smiles=None, cas=None):
 
 
 if __name__ == '__main__':
-
-    # testing search with name
-    ids = pd.read_csv('identifiers.csv')
-    names_sampled = ids[['ligand', 'id']].sample(50)
-
-    df = lookup_kraken(name='jackie')
-    print(df)
+    print('What are you trying to do')
