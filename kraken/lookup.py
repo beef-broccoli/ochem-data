@@ -1,22 +1,22 @@
 # lookup molecules in kraken
 
 import pandas as pd
+import numpy as np
 from rdkit import Chem
 import rdkit.Chem.rdMolDescriptors as rdMolDescriptors
 
 
 # search priority: cas -> name -> canonical smiles -> atom count and formula
-# Note 1: no salt in smiles
-# TODO: multiple fields for names (Ph, CF3, tBu)
-# TODO: inchi support
+# Note 1: remove salt before querying with smiles
 
-def lookup_kraken(cas=None, name=None, smiles=None, inchi=None):
+def lookup_kraken(cas=None, name=None, smiles=None, inchi=None, keywords=None):
 
     identifiers = pd.read_csv('identifiers.csv')
     identifiers['id'] = identifiers['id'].astype('int')
     identifiers['atomcount'] = identifiers['atomcount'].astype('int')
     results_df = pd.DataFrame()
 
+    # inner function: serach by smiles
     def search_by_smiles(smi):
 
         can_smiles_list = list(identifiers['can_smiles'].astype('str'))
@@ -40,7 +40,6 @@ def lookup_kraken(cas=None, name=None, smiles=None, inchi=None):
 
         return temp_df
 
-    # look up with cas first
     if cas is not None:
 
         if type(cas) != str:
@@ -73,7 +72,6 @@ def lookup_kraken(cas=None, name=None, smiles=None, inchi=None):
             print('Found result by CAS number')
             return results_df[['ligand', 'id', 'can_smiles']]
 
-    # check name next
     if name is not None:
 
         if type(name) != str:
@@ -121,6 +119,25 @@ def lookup_kraken(cas=None, name=None, smiles=None, inchi=None):
             print('Found result by inchi')
             return results_df[['ligand', 'id', 'can_smiles']]
 
+    if keywords is not None:
+
+        if type(keywords) != list:
+            message = 'Search value for keywords must be a list of strings! ' \
+                      'Example: lookup_kraken(keywords=[\'CF3\', \'Ph\'])'
+            raise TypeError(message)
+
+        boo = np.zeros(shape=(len(identifiers), len(keywords)))
+        for i in range(len(keywords)):
+            boo[:, i] = identifiers['ligand'].str.contains(keywords[i], na=False, case=False)
+        boo = np.all(boo.astype(bool), axis=1)  # name must contain all keywords
+
+        if np.sum(boo):
+            temp_df = identifiers.loc[boo]
+            results_df = pd.concat([results_df, temp_df])
+            if len(results_df) == 1:  # only find one entry, return search result
+                print('Found result by keywords')
+                return results_df[['ligand', 'id', 'can_smiles']]
+
     if len(results_df) == 0:
         print('No matches found. This ligand is possibly not in kraken.')
         return None
@@ -129,6 +146,6 @@ def lookup_kraken(cas=None, name=None, smiles=None, inchi=None):
     return results_df[['ligand', 'id', 'can_smiles']]
 
 
+# for testing only
 if __name__ == '__main__':
-    print(lookup_kraken())
-    print('What are you trying to do')
+    print(lookup_kraken(keywords=['Ph', 'tBu', 'OMe', 'jason']))
