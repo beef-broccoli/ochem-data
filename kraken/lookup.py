@@ -6,7 +6,7 @@ from rdkit import Chem
 import rdkit.Chem.rdMolDescriptors as rdMolDescriptors
 
 
-# search priority: cas -> name -> canonical smiles -> atom count and formula
+# search priority: cas -> name -> canonical smiles -> atom count and formula -> inchi -> keywords
 # Note 1: remove salt before querying with smiles
 
 def lookup_kraken(cas=None, name=None, smiles=None, inchi=None, keywords=None):
