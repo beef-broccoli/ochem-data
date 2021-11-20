@@ -1,5 +1,8 @@
 # lookup molecules in kraken
 
+import requests
+
+import yaml
 import pandas as pd
 import numpy as np
 from rdkit import Chem
@@ -7,9 +10,10 @@ import rdkit.Chem.rdMolDescriptors as rdMolDescriptors
 
 
 # search priority: cas -> name -> canonical smiles -> atom count and formula -> inchi -> keywords
+# This search method displays result as a dataframe. User selection is still required
 # Note 1: remove salt before querying with smiles
 
-def lookup_kraken(cas=None, name=None, smiles=None, inchi=None, keywords=None):
+def lookup(cas=None, name=None, smiles=None, inchi=None, keywords=None):
 
     identifiers = pd.read_csv('identifiers.csv')
     identifiers['id'] = identifiers['id'].astype('int')
@@ -146,6 +150,62 @@ def lookup_kraken(cas=None, name=None, smiles=None, inchi=None, keywords=None):
     return results_df[['ligand', 'id', 'can_smiles']]
 
 
+def access(id, mode=None):
+    """
+    access raw kraken data with kraken id and mode
+    returns loaded data and mode
+
+    :param id: kraken id as integer
+    :type id: int
+    :param mode: confdata, data, energy
+    :type mode: str
+    :return: loaded data, mode
+    :rtype:
+    """
+
+    github_url = 'https://raw.githubusercontent.com/doyle-lab-ucla/krkn-raw/main/raw/'
+
+    # add leading zeros (kraken currently uses 8 digits)
+    k_id = str(id).zfill(8)
+
+    if mode == 'confdata':
+        file_name = k_id + '_confdata.yml'
+    elif mode == 'data':
+        file_name = k_id + '_data.yml'
+    elif mode == 'energy':
+        file_name = k_id + '_relative_energies.csv'
+    else:
+        raise ValueError('unknown mode; choose between confdata, data, energy')
+
+    url = str(github_url + file_name)
+
+    if mode == 'energy':
+        data = pd.read_csv(url, delimiter=';')
+    else:
+        headers = {'Accept': 'text/yaml'}
+        r = requests.get(url, headers=headers)
+        if r.status_code == 200:
+            data = yaml.load(r.text, Loader=yaml.Loader)
+        else:
+            raise ConnectionError('cannot retrieve data from Github (likely internet issue), try again')
+
+    # return mode to differentiate between formats
+    return data, mode
+
+
+def find():
+    """lookup and return only the id for one ligand (the only match, the best match, no match)"""
+    return None
+
+
+def access_vburmin_conf():
+    return None
+
+
 # for testing only
 if __name__ == '__main__':
-    print(lookup_kraken(keywords=['Ph', 'tBu', 'OMe', 'jason']))
+    data = access(1583, mode='confdata')
+    for d in data:
+        print(d)
+        exit()
+    # print(lookup(keywords=['Ph', 'tBu', 'OMe', 'jason']))
