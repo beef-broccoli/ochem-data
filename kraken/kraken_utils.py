@@ -13,7 +13,26 @@ import rdkit.Chem.rdMolDescriptors as rdMolDescriptors
 # This search method displays result as a dataframe. User selection is still required
 # Note 1: remove salt before querying with smiles
 
-def lookup(cas=None, name=None, smiles=None, inchi=None, keywords=None):
+def lookup(cas=None, name=None, smiles=None, inchi=None, keywords=None, verbose=1):
+    """
+    lookup function for kraken
+    Input: cas, name, smiles, inchi or keywords
+    Output: phopshine in kraken database with its ID, name and smiles
+
+    :param cas:
+    :type cas: str
+    :param name:
+    :type name: str
+    :param smiles:
+    :type smiles: str
+    :param inchi:
+    :type inchi: str
+    :param keywords:
+    :type keywords:
+    :param verbose:
+    :type verbose:
+    :return:
+    """
 
     identifiers = pd.read_csv('identifiers.csv')
     identifiers['id'] = identifiers['id'].astype('int')
@@ -73,7 +92,8 @@ def lookup(cas=None, name=None, smiles=None, inchi=None, keywords=None):
         results_df = pd.concat([df_1, df_2, df_3], axis=1)
 
         if len(results_df) == 1:  # only find one entry, return search result
-            print('Found result by CAS number')
+            if verbose:
+                print('Found result by CAS number')
             return results_df[['ligand', 'id', 'can_smiles']]
 
     if name is not None:
@@ -94,7 +114,8 @@ def lookup(cas=None, name=None, smiles=None, inchi=None, keywords=None):
             temp_df = identifiers[identifiers['ligand'].isin(results)]
             results_df = pd.concat([results_df, temp_df])
             if len(results_df) == 1:  # only find one entry, return search result
-                print('Found result by ligand name')
+                if verbose:
+                    print('Found result by ligand name')
                 return results_df[['ligand', 'id', 'can_smiles']]
 
     if smiles is not None:
@@ -106,7 +127,8 @@ def lookup(cas=None, name=None, smiles=None, inchi=None, keywords=None):
         results_df = pd.concat([results_df, temp_df])
 
         if len(results_df) == 1:  # only find one entry, return search result
-            print('Found result by smiles')
+            if verbose:
+                print('Found result by smiles')
             return results_df[['ligand', 'id', 'can_smiles']]
 
     if inchi is not None:
@@ -120,7 +142,8 @@ def lookup(cas=None, name=None, smiles=None, inchi=None, keywords=None):
         results_df = pd.concat([results_df, temp_df])
 
         if len(results_df) == 1:  # only find one entry, return search result
-            print('Found result by inchi')
+            if verbose:
+                print('Found result by inchi')
             return results_df[['ligand', 'id', 'can_smiles']]
 
     if keywords is not None:
@@ -139,24 +162,27 @@ def lookup(cas=None, name=None, smiles=None, inchi=None, keywords=None):
             temp_df = identifiers.loc[boo]
             results_df = pd.concat([results_df, temp_df])
             if len(results_df) == 1:  # only find one entry, return search result
-                print('Found result by keywords')
+                if verbose:
+                    print('Found result by keywords')
                 return results_df[['ligand', 'id', 'can_smiles']]
 
     if len(results_df) == 0:
-        print('No matches found. This ligand is possibly not in kraken.')
+        if verbose:
+            print('No matches found. This ligand is possibly not in kraken.')
         return None
 
-    print('No exact match found, here are some possibilities')
+    if verbose:
+        print('No exact match found, here are some possibilities')
     return results_df[['ligand', 'id', 'can_smiles']]
 
 
-def access(id, mode=None):
+def access(k_id, mode=None):
     """
-    access raw kraken data with kraken id and mode
+    access raw kraken data with kraken k_id and mode
     returns loaded data and mode
 
-    :param id: kraken id as integer
-    :type id: int
+    :param k_id: kraken k_id as integer
+    :type k_id: int
     :param mode: confdata, data, energy
     :type mode: str
     :return: loaded data, mode
@@ -166,14 +192,14 @@ def access(id, mode=None):
     github_url = 'https://raw.githubusercontent.com/doyle-lab-ucla/krkn-raw/main/raw/'
 
     # add leading zeros (kraken currently uses 8 digits)
-    k_id = str(id).zfill(8)
+    full_id = str(k_id).zfill(8)
 
     if mode == 'confdata':
-        file_name = k_id + '_confdata.yml'
+        file_name = full_id + '_confdata.yml'
     elif mode == 'data':
-        file_name = k_id + '_data.yml'
+        file_name = full_id + '_data.yml'
     elif mode == 'energy':
-        file_name = k_id + '_relative_energies.csv'
+        file_name = full_id + '_relative_energies.csv'
     else:
         raise ValueError('unknown mode; choose between confdata, data, energy')
 
@@ -193,9 +219,30 @@ def access(id, mode=None):
     return data, mode
 
 
-def find():
-    """lookup and return only the id for one ligand (the only match, the best match, no match)"""
-    return None
+def find(values, identifier):
+    """
+    Input: a list of identifier values, type of identifiers
+    Returns: if found one result, the kraken ID. If multiple or no results are found, the original identifier value
+
+    :param values:
+    :param identifier:
+    :return:
+    """
+
+    if identifier not in ['cas', 'name', 'smiles', 'inchi']:
+        raise ValueError('identifier needs to be cas, name, smiles or inchi. (keyword is not supported)')
+
+    results = []
+    for val in values:
+        d = {identifier: val,
+             'verbose': 0}
+        lookup_result = lookup(**d)
+        if len(lookup_result) == 1:
+            results.append(lookup_result['id'].values[0])
+        else:  # no single match, return original identifier value
+            results.append(val)
+
+    return results
 
 
 def access_vburmin_conf():
@@ -204,8 +251,12 @@ def access_vburmin_conf():
 
 # for testing only
 if __name__ == '__main__':
-    data = access(1583, mode='confdata')
-    for d in data:
-        print(d)
-        exit()
+
+    # TODO testing for find()
+    values = ['cyjohnphos', 'phos', 'pcy3', 'pph3']
+    identifier = 'name'
+    print(
+        find(values=values, identifier=identifier)
+    )
+
     # print(lookup(keywords=['Ph', 'tBu', 'OMe', 'jason']))
