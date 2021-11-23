@@ -180,7 +180,7 @@ def lookup(cas=None, name=None, smiles=None, inchi=None, keywords=None, verbose=
     return results_df[['ligand', 'id', 'can_smiles']]
 
 
-def access(k_id, mode=None):
+def access(k_id, mode=None, verbose=1):
     """
     access raw kraken data with kraken k_id and mode
     returns loaded data and mode (to differentiate format)
@@ -190,6 +190,8 @@ def access(k_id, mode=None):
     :type k_id: int
     :param mode: confdata, data, energy
     :type mode: str
+    :param verbose:
+    :type verbose:
     :return: loaded data, mode
     :rtype:
     """
@@ -214,7 +216,8 @@ def access(k_id, mode=None):
         try:
             data = pd.read_csv(url, delimiter=';')
         except HTTPError:
-            print('ligand {0} not found'.format(full_id))
+            if verbose:
+                print('ligand {0} not found'.format(full_id))
             return None, mode
     else:  # data, confdata
         headers = {'Accept': 'text/yaml'}
@@ -223,7 +226,8 @@ def access(k_id, mode=None):
             data = yaml.load(r.text, Loader=yaml.Loader)
             return data, mode
         elif r.status_code == 404:
-            print('ligand {0} not found'.format(full_id))
+            if verbose:
+                print('ligand {0} not found'.format(full_id))
             return None, mode
         else:
             raise ConnectionError('cannot retrieve data from Github (likely connection issue), try again')
@@ -265,14 +269,18 @@ def lookup_list(values, identifier):
 def access_vburmin_conf(id_list):
 
     conf_names = []
+    found_list = []
+    not_found_list = []
 
     for id in id_list:
-        data, _ = access(id, mode='energy')
-        #conf_names.append(data['vburminconf'])
+        data, _ = access(id, mode='data', verbose=0)
+        if data is None:
+            not_found_list.append(id)
+        else:
+            found_list.append(id)
+            conf_names.append(data['vburminconf'])
 
-    print(conf_names)
-
-    return None
+    return found_list, not_found_list
 
 
 
@@ -282,14 +290,20 @@ def access_vburmin_conf(id_list):
 
 if __name__ == '__main__':
 
-    access(359, mode='energy')
 
-    # with open('buchwald.json', 'r') as f:
-    #     bids = json.load(f)
-    #
-    # access_vburmin_conf(bids)
-    #
-    # pass
+
+    with open('buchwald/buchwald.json', 'r') as f:
+        bids = json.load(f)
+
+    found_list, not_found_list = access_vburmin_conf(bids)
+
+    with open('buchwald/buchwald_found.json', 'w') as f:
+        json.dump(found_list, f)
+
+    with open('buchwald/buchwald_not_found.json', 'w') as f:
+        json.dump(not_found_list, f)
+
+    pass
 
     # values = ['cyjohnphos', 'brett', 'pcy3', 'pph3']
     # identifier = 'name'
