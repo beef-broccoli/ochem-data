@@ -3,10 +3,12 @@
 import requests
 
 import yaml
+import json
 import pandas as pd
 import numpy as np
 from rdkit import Chem
 import rdkit.Chem.rdMolDescriptors as rdMolDescriptors
+from urllib.error import HTTPError
 
 pd.set_option("display.max_rows", None, "display.max_columns", None, 'display.max_colwidth', None)
 
@@ -181,7 +183,8 @@ def lookup(cas=None, name=None, smiles=None, inchi=None, keywords=None, verbose=
 def access(k_id, mode=None):
     """
     access raw kraken data with kraken k_id and mode
-    returns loaded data and mode
+    returns loaded data and mode (to differentiate format)
+    TODO: error handling for retrieving data from url
 
     :param k_id: kraken k_id as integer
     :type k_id: int
@@ -208,17 +211,22 @@ def access(k_id, mode=None):
     url = str(github_url + file_name)
 
     if mode == 'energy':
-        data = pd.read_csv(url, delimiter=';')
-    else:
+        try:
+            data = pd.read_csv(url, delimiter=';')
+        except HTTPError:
+            print('ligand {0} not found'.format(full_id))
+            return None, mode
+    else:  # data, confdata
         headers = {'Accept': 'text/yaml'}
         r = requests.get(url, headers=headers)
         if r.status_code == 200:
             data = yaml.load(r.text, Loader=yaml.Loader)
+            return data, mode
+        elif r.status_code == 404:
+            print('ligand {0} not found'.format(full_id))
+            return None, mode
         else:
             raise ConnectionError('cannot retrieve data from Github (likely connection issue), try again')
-
-    # return mode to differentiate between formats
-    return data, mode
 
 
 def lookup_list(values, identifier):
@@ -254,18 +262,39 @@ def lookup_list(values, identifier):
     return results
 
 
-def access_vburmin_conf():
+def access_vburmin_conf(id_list):
+
+    conf_names = []
+
+    for id in id_list:
+        data, _ = access(id, mode='energy')
+        #conf_names.append(data['vburminconf'])
+
+    print(conf_names)
+
     return None
 
 
+
+
+
 # for testing only
+
 if __name__ == '__main__':
 
-    # TODO testing for find()
-    values = ['cyjohnphos', 'brett', 'pcy3', 'pph3']
-    identifier = 'name'
-    print(
-        lookup_list(values=values, identifier=identifier)
-    )
+    access(359, mode='energy')
+
+    # with open('buchwald.json', 'r') as f:
+    #     bids = json.load(f)
+    #
+    # access_vburmin_conf(bids)
+    #
+    # pass
+
+    # values = ['cyjohnphos', 'brett', 'pcy3', 'pph3']
+    # identifier = 'name'
+    # print(
+    #     lookup_list(values=values, identifier=identifier)
+    # )
 
     # print(lookup(keywords=['Ph', 'tBu', 'OMe', 'jason']))
