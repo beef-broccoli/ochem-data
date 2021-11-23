@@ -213,13 +213,13 @@ def access(k_id, mode=None):
         if r.status_code == 200:
             data = yaml.load(r.text, Loader=yaml.Loader)
         else:
-            raise ConnectionError('cannot retrieve data from Github (likely internet issue), try again')
+            raise ConnectionError('cannot retrieve data from Github (likely connection issue), try again')
 
     # return mode to differentiate between formats
     return data, mode
 
 
-def find(values, identifier):
+def lookup_list(values, identifier):
     """
     Input: a list of identifier values, type of identifiers
     Returns: if found one result, the kraken ID. If multiple or no results are found, the original identifier value
@@ -256,7 +256,7 @@ if __name__ == '__main__':
     values = ['cyjohnphos', 'phos', 'pcy3', 'pph3']
     identifier = 'name'
     print(
-        find(values=values, identifier=identifier)
+        lookup_list(values=values, identifier=identifier)
     )
 
     # print(lookup(keywords=['Ph', 'tBu', 'OMe', 'jason']))
