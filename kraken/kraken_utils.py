@@ -8,6 +8,8 @@ import numpy as np
 from rdkit import Chem
 import rdkit.Chem.rdMolDescriptors as rdMolDescriptors
 
+pd.set_option("display.max_rows", None, "display.max_columns", None, 'display.max_colwidth', None)
+
 
 # search priority: cas -> name -> canonical smiles -> atom count and formula -> inchi -> keywords
 # This search method displays result as a dataframe. User selection is still required
@@ -222,7 +224,8 @@ def access(k_id, mode=None):
 def lookup_list(values, identifier):
     """
     Input: a list of identifier values, type of identifiers
-    Returns: if found one result, the kraken ID. If multiple or no results are found, the original identifier value
+    Returns: if found one result, the kraken ID. If multiple or no results are found, outputs possibilities and prompt
+    user to enter the correct kraken ID for ligand
 
     :param values:
     :param identifier:
@@ -240,7 +243,13 @@ def lookup_list(values, identifier):
         if len(lookup_result) == 1:
             results.append(lookup_result['id'].values[0])
         else:  # no single match, return original identifier value
-            results.append(val)
+            print('For ligand with \"{0}\" \"{1}\", no match is found. Here are some possibilities:'.format(identifier, val))
+            print(lookup_result)
+            input_id = int(input('Please input a kraken ID for this ligand (0 if none matches): '))
+            if input_id:
+                results.append(input_id)
+            else:
+                results.append(val)
 
     return results
 
@@ -253,7 +262,7 @@ def access_vburmin_conf():
 if __name__ == '__main__':
 
     # TODO testing for find()
-    values = ['cyjohnphos', 'phos', 'pcy3', 'pph3']
+    values = ['cyjohnphos', 'brett', 'pcy3', 'pph3']
     identifier = 'name'
     print(
         lookup_list(values=values, identifier=identifier)
