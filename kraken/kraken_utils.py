@@ -9,7 +9,6 @@ import pandas as pd
 import numpy as np
 from rdkit import Chem
 import rdkit.Chem.rdMolDescriptors as rdMolDescriptors
-from urllib.error import HTTPError
 
 pd.set_option("display.max_rows", None, "display.max_columns", None, 'display.max_colwidth', None)
 
@@ -228,7 +227,7 @@ def access(k_id, mode=None, verbose=1):
     :param verbose: verbose
     :type verbose: int
     :return: loaded data
-    :rtype: Union[pd.DataFrame, dict]
+    :rtype: Union[pandas.core.frame.DataFrame, dict]
     """
 
     github_url = 'https://raw.githubusercontent.com/doyle-lab-ucla/krkn/main/raw/'
@@ -259,18 +258,23 @@ def access(k_id, mode=None, verbose=1):
         raise ConnectionError('unknown networking issue, status code {0}'.format(r.status_code))
 
 
-def access_multi(ids, mode=None, howmanycores=8):
+def access_multi(ids, access_func=access, mode=None, howmanycores=8):
     """
     Access the data for a list ligands. Use multiprocessing to speed up access()
+    Note: if use mode='confdata', it will take a while to fetch (~1 min for 50 ligands)
 
     :param ids: list of kraken ids
     :type ids: list of int
+    :param access_func: access function to fetch data for individual ligand (default: access() fetches all data
+    specified only by mode)
+    :type access_func: function
     :param mode: 'confdata', 'data', 'energy'
     :type mode: str
-    :param howmanycores: number of cores of this computer (decides how many parallel processes can be initiated)
+    :param howmanycores: number of cores on this computer (decides how many parallel processes can be initiated)
     :type howmanycores: int
-    :return: retrieved data
-    :rtype: dict
+    :return:
+        - data_filtered - a dict of retrieved data
+        - ids_with_no_data - a list of ids(int) with no data available
     """
 
     if mode not in ['data', 'confdata', 'energy']:
@@ -279,26 +283,38 @@ def access_multi(ids, mode=None, howmanycores=8):
     args = zip(ids, itertools.repeat(mode), itertools.repeat(0))  # zipped args for multiprocessing
 
     with multiprocessing.Pool(howmanycores) as p:  # num_workers goes with number of cores of computer
-        datas = p.starmap(access, args)
+        datas = p.starmap(access_func, args)  # TODO: make sure customized access function use same args
 
-    data = dict(zip(ids, datas))
+    data = dict(zip(ids, datas))  # outputs a dict with None
+    ids_no_data = [k for k, v in data.items() if v is None]
+    data_filtered = {k: v for k, v in data.items() if v is not None}  # seems wasteful, but probably okay for now...
 
-    return data
+    # maybe get ids_yes_data from data_filtered.keys(), then do a set difference with ids to get ids_no_data
+
+    return data_filtered, ids_no_data
 
 
-def access_vburmin_conf(id):
-    # TODO: this is slow. Working on access_multi()
+def access_vburmin_conf(ids):
 
-    data = access(id, mode='data', verbose=0)
-    if data is None:
+    data, ids_no_data = access_multi(ids, mode='data')
+    ids_yes_data = list(data.keys())
+
+    vburmin_conf_names = {}
+    for id in ids_yes_data:
+        vburmin_conf_names[id] = data[id]['vburminconf']
+
+    # TODO: too slow, probably due to read/write too many files.
+    #  need to write customized access function to only fetch info that is needed.
+
+    def access_one_conformer_data():
         return None
-    else:
-        vburmin_conf = data['vburminconf']
-        del data
-        confdata = access(id, mode='confdata', verbose=0)
-        vburmin_confdata = confdata[vburmin_conf]
 
-    return vburmin_confdata
+    data, _ = access_multi(ids_yes_data, mode='confdata')
+    temp = data[1][vburmin_conf_names[1]]
+
+    print(temp)
+
+    return None
 
 
 def _access_with_persistent_http(k_ids, mode=None, verbose=1):
@@ -345,7 +361,7 @@ def _access_with_persistent_http(k_ids, mode=None, verbose=1):
 
 def _access_speed_test():
     # 50 ligands
-    # Access_multi_v1: 60.582969332999994s
+    # Access_multi: 60.582969332999994s
     # For loop with access(): 265.57729820400004s
 
     with open('buchwald/buchwald_found.json', 'r') as f:
@@ -368,11 +384,14 @@ def _access_speed_test():
 # for testing only
 if __name__ == '__main__':
 
-    with open('buchwald/buchwald_found.json', 'r') as f:
+    with open('buchwald/buchwald.json', 'r') as f:
         bids = json.load(f)
 
-    output = access_multi(bids, mode='data')
-    print(output[1])
+    data, ids = access_multi(bids, mode='energy')
+    print(data[1])
+
+    # output, l = access_multi([1, 2, 359, 360], mode='data')
+    # print(l)
 
     #access_multi_v1(bids, mode='energy')
     
