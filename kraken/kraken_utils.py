@@ -1,4 +1,5 @@
 import requests
+from io import StringIO
 import multiprocessing
 import itertools
 import timeit
@@ -218,70 +219,58 @@ def lookup_multi(values, identifier):
 def access(k_id, mode=None, verbose=1):
     """
     For a single ligand, access raw kraken data with kraken id (k_id) and mode (data, confdata, energy).
-    Note: this method is slow. Use access_multi() for batch operation
+    Note: Use access_multi() for batch operation. For loop is slow
 
-    :param k_id: kraken k_id as integer
+    :param k_id: kraken id
     :type k_id: int
-    :param mode: confdata, data, energy
+    :param mode: 'confdata', 'data', 'energy'
     :type mode: str
-    :param verbose:
-    :type verbose:
+    :param verbose: verbose
+    :type verbose: int
     :return: loaded data
-    :rtype: Object
+    :rtype: Union[pd.DataFrame, dict]
     """
 
     github_url = 'https://raw.githubusercontent.com/doyle-lab-ucla/krkn/main/raw/'
 
-    # add leading zeros (kraken currently uses 8 digits)
-    full_id = str(k_id).zfill(8)
-
     if mode == 'confdata':
-        file_name = full_id + '_confdata.yml'
+        suffix = '_confdata.yml'
     elif mode == 'data':
-        file_name = full_id + '_data.yml'
+        suffix = '_data.yml'
     elif mode == 'energy':
-        file_name = full_id + '_relative_energies.csv'
+        suffix = '_relative_energies.csv'
     else:
         raise ValueError('unknown mode; choose between confdata, data, energy')
 
-    url = str(github_url + file_name)
+    # add leading zeros (kraken currently uses 8 digits)
+    full_id = str(k_id).zfill(8)
 
-    # energy is .csv, data and confdata is .yaml
-
-    if mode == 'energy':
-        try:
-            data = pd.read_csv(url, delimiter=';')
-        except HTTPError:
-            if verbose:
-                print('ligand {0} not found'.format(full_id))
-            return None
+    r = requests.get(github_url + full_id + suffix)
+    if r.status_code == 404:
+        if verbose:
+            print('ligand {0} not found'.format(full_id))
+        return None
+    elif r.status_code == 200:
+        if mode == 'energy':
+            return pd.read_csv(StringIO(r.text), delimiter=';')
         else:
-            return data
-
-    else:  # data, confdata
-        headers = {'Accept': 'text/yaml'}
-        r = requests.get(url, headers=headers)
-        if r.status_code == 200:
-            data = yaml.load(r.text, Loader=yaml.Loader)
-            return data
-        elif r.status_code == 404:
-            if verbose:
-                print('ligand {0} not found'.format(full_id))
-            return None
-        else:
-            raise ConnectionError('cannot retrieve data from Github (likely connection issue), try again')
+            return yaml.load(r.text, Loader=yaml.Loader)
+    else:
+        raise ConnectionError('unknown networking issue, status code {0}'.format(r.status_code))
 
 
-# TODO: speed up requests
-#
-# https://stackoverflow.com/questions/34512646/how-to-speed-up-api-requests
-
-def access_multi_v1(ids, mode=None):
+def access_multi(ids, mode=None, howmanycores=8):
     """
-    multiprocessing
+    Access the data for a list ligands. Use multiprocessing to speed up access()
 
-    for 50 ligands, 192s to get all confdata
-
+    :param ids: list of kraken ids
+    :type ids: list of int
+    :param mode: 'confdata', 'data', 'energy'
+    :type mode: str
+    :param howmanycores: number of cores of this computer (decides how many parallel processes can be initiated)
+    :type howmanycores: int
+    :return: retrieved data
+    :rtype: dict
     """
 
     if mode not in ['data', 'confdata', 'energy']:
@@ -289,16 +278,12 @@ def access_multi_v1(ids, mode=None):
 
     args = zip(ids, itertools.repeat(mode), itertools.repeat(0))  # zipped args for multiprocessing
 
-    with multiprocessing.Pool(8) as p:  # num_workers goes with number of cores of computer
+    with multiprocessing.Pool(howmanycores) as p:  # num_workers goes with number of cores of computer
         datas = p.starmap(access, args)
 
-    return datas
+    data = dict(zip(ids, datas))
 
-
-def access_multi_v2():
-    # persistent http session
-    # https://docs.python-requests.org/en/master/user/advanced/#session-objects
-    return None
+    return data
 
 
 def access_vburmin_conf(id):
@@ -316,23 +301,66 @@ def access_vburmin_conf(id):
     return vburmin_confdata
 
 
-def _access_test():
+def _access_with_persistent_http(k_ids, mode=None, verbose=1):
+    """
+    Use a persistent http connection to keep querying github
+    Not really faster, at least when first accessing the data
+    Weirdly there is some speed up if query the second time (sometimes)
+    """
+
+    github_url = 'https://raw.githubusercontent.com/doyle-lab-ucla/krkn/main/raw/'
+
+    if mode == 'confdata':
+        suffix = '_confdata.yml'
+    elif mode == 'data':
+        suffix = '_data.yml'
+    elif mode == 'energy':
+        suffix = '_relative_energies.csv'
+    else:
+        raise ValueError('unknown mode; choose between confdata, data, energy')
+
+    # add leading zeros, add suffix to complete url
+    full_ids = [str(k_id).zfill(8) for k_id in k_ids]
+    headers = [full_id + suffix for full_id in full_ids]
+
+    s = requests.Session()
+
+    data = {}
+    for ii in range(len(k_ids)):
+        r = s.get(github_url+headers[ii])
+        if r.status_code == 404:
+            if verbose:
+                print('ligand {0} not found'.format(full_ids[ii]))
+            data[full_ids[ii]] = None
+        elif r.status_code == 200:
+            if mode == 'energy':
+                data[full_ids[ii]] = pd.read_csv(StringIO(r.text), delimiter=';')
+            else:
+                data[full_ids[ii]] = yaml.load(r.text, Loader=yaml.Loader)
+        else:
+            raise ConnectionError('unknown networking issue, status code {0}'.format(r.status_code))
+
+    return data
+
+
+def _access_speed_test():
+    # 50 ligands
     # Access_multi_v1: 60.582969332999994s
     # For loop with access(): 265.57729820400004s
 
     with open('buchwald/buchwald_found.json', 'r') as f:
         bids = json.load(f)
 
-    test_list = bids[0:50]
-
-    start = timeit.default_timer()
-    access_multi_v1(test_list, mode='confdata')
-    print('Access_multi_v1: {0}s'.format(timeit.default_timer() - start))
-
-    start = timeit.default_timer()
-    for l in test_list:
-        access(l, mode='confdata')
-    print('For loop with access(): {0}s'.format(timeit.default_timer() - start))
+    # # for loop access() vs. access_multi()
+    #
+    # start = timeit.default_timer()
+    # access_multi(test_list, mode='confdata')
+    # print('Access_multi_v1: {0}s'.format(timeit.default_timer() - start))
+    #
+    # start = timeit.default_timer()
+    # for l in test_list:
+    #     access(l, mode='confdata')
+    # print('For loop with access(): {0}s'.format(timeit.default_timer() - start))
 
     return None
 
@@ -340,11 +368,11 @@ def _access_test():
 # for testing only
 if __name__ == '__main__':
 
-    _access_test()
+    with open('buchwald/buchwald_found.json', 'r') as f:
+        bids = json.load(f)
 
-    # data = access_multi_v1(bids, mode='data')
-
-    #print(data[1])
+    output = access_multi(bids, mode='data')
+    print(output[1])
 
     #access_multi_v1(bids, mode='energy')
     
