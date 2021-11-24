@@ -1,7 +1,7 @@
-# lookup molecules in kraken
-
 import requests
-
+import multiprocessing
+import itertools
+import timeit
 import yaml
 import json
 import pandas as pd
@@ -13,15 +13,15 @@ from urllib.error import HTTPError
 pd.set_option("display.max_rows", None, "display.max_columns", None, 'display.max_colwidth', None)
 
 
-# search priority: cas -> name -> canonical smiles -> atom count and formula -> inchi -> keywords
-# This search method displays result as a dataframe. User selection is still required
-# Note 1: remove salt before querying with smiles
-
 def lookup(cas=None, name=None, smiles=None, inchi=None, keywords=None, verbose=1):
     """
-    lookup function for kraken
+    lookup a single ligand in kraken
     Input: cas, name, smiles, inchi or keywords
-    Output: phopshine in kraken database with its ID, name and smiles
+    Output: phosphines in kraken database with its ID, name and smiles
+    Notes:
+        - remove salt before querying with smiles
+        - search priority: cas -> name -> canonical smiles -> atom count and formula -> inchi -> keywords
+        - This search method displays result as a dataframe. User selection is still required
 
     :param cas:
     :type cas: str
@@ -35,7 +35,8 @@ def lookup(cas=None, name=None, smiles=None, inchi=None, keywords=None, verbose=
     :type keywords:
     :param verbose:
     :type verbose:
-    :return:
+    :return: search results
+    :rtype: pd.DataFrame
     """
 
     identifiers = pd.read_csv('identifiers.csv')
@@ -180,63 +181,11 @@ def lookup(cas=None, name=None, smiles=None, inchi=None, keywords=None, verbose=
     return results_df[['ligand', 'id', 'can_smiles']]
 
 
-def access(k_id, mode=None, verbose=1):
+def lookup_multi(values, identifier):
     """
-    access raw kraken data with kraken k_id and mode
-    returns loaded data and mode (to differentiate format)
-    TODO: error handling for retrieving data from url
-
-    :param k_id: kraken k_id as integer
-    :type k_id: int
-    :param mode: confdata, data, energy
-    :type mode: str
-    :param verbose:
-    :type verbose:
-    :return: loaded data, mode
-    :rtype:
-    """
-
-    github_url = 'https://raw.githubusercontent.com/doyle-lab-ucla/krkn-raw/main/raw/'
-
-    # add leading zeros (kraken currently uses 8 digits)
-    full_id = str(k_id).zfill(8)
-
-    if mode == 'confdata':
-        file_name = full_id + '_confdata.yml'
-    elif mode == 'data':
-        file_name = full_id + '_data.yml'
-    elif mode == 'energy':
-        file_name = full_id + '_relative_energies.csv'
-    else:
-        raise ValueError('unknown mode; choose between confdata, data, energy')
-
-    url = str(github_url + file_name)
-
-    if mode == 'energy':
-        try:
-            data = pd.read_csv(url, delimiter=';')
-        except HTTPError:
-            if verbose:
-                print('ligand {0} not found'.format(full_id))
-            return None, mode
-    else:  # data, confdata
-        headers = {'Accept': 'text/yaml'}
-        r = requests.get(url, headers=headers)
-        if r.status_code == 200:
-            data = yaml.load(r.text, Loader=yaml.Loader)
-            return data, mode
-        elif r.status_code == 404:
-            if verbose:
-                print('ligand {0} not found'.format(full_id))
-            return None, mode
-        else:
-            raise ConnectionError('cannot retrieve data from Github (likely connection issue), try again')
-
-
-def lookup_list(values, identifier):
-    """
+    Builds on top of lookup()
     Input: a list of identifier values, type of identifiers
-    Returns: if found one result, the kraken ID. If multiple or no results are found, outputs possibilities and prompt
+    Returns: if found one result, return kraken ID. If multiple or no results are found, outputs possibilities and prompt
     user to enter the correct kraken ID for ligand
 
     :param values:
@@ -266,49 +215,146 @@ def lookup_list(values, identifier):
     return results
 
 
-def access_vburmin_conf(id_list):
+def access(k_id, mode=None, verbose=1):
+    """
+    For a single ligand, access raw kraken data with kraken id (k_id) and mode (data, confdata, energy).
+    Note: this method is slow. Use access_multi() for batch operation
 
-    conf_names = []
-    found_list = []
-    not_found_list = []
+    :param k_id: kraken k_id as integer
+    :type k_id: int
+    :param mode: confdata, data, energy
+    :type mode: str
+    :param verbose:
+    :type verbose:
+    :return: loaded data
+    :rtype: Object
+    """
 
-    for id in id_list:
-        data, _ = access(id, mode='data', verbose=0)
-        if data is None:
-            not_found_list.append(id)
+    github_url = 'https://raw.githubusercontent.com/doyle-lab-ucla/krkn/main/raw/'
+
+    # add leading zeros (kraken currently uses 8 digits)
+    full_id = str(k_id).zfill(8)
+
+    if mode == 'confdata':
+        file_name = full_id + '_confdata.yml'
+    elif mode == 'data':
+        file_name = full_id + '_data.yml'
+    elif mode == 'energy':
+        file_name = full_id + '_relative_energies.csv'
+    else:
+        raise ValueError('unknown mode; choose between confdata, data, energy')
+
+    url = str(github_url + file_name)
+
+    # energy is .csv, data and confdata is .yaml
+
+    if mode == 'energy':
+        try:
+            data = pd.read_csv(url, delimiter=';')
+        except HTTPError:
+            if verbose:
+                print('ligand {0} not found'.format(full_id))
+            return None
         else:
-            found_list.append(id)
-            conf_names.append(data['vburminconf'])
+            return data
 
-    return found_list, not_found_list
+    else:  # data, confdata
+        headers = {'Accept': 'text/yaml'}
+        r = requests.get(url, headers=headers)
+        if r.status_code == 200:
+            data = yaml.load(r.text, Loader=yaml.Loader)
+            return data
+        elif r.status_code == 404:
+            if verbose:
+                print('ligand {0} not found'.format(full_id))
+            return None
+        else:
+            raise ConnectionError('cannot retrieve data from Github (likely connection issue), try again')
 
 
+# TODO: speed up requests
+#
+# https://stackoverflow.com/questions/34512646/how-to-speed-up-api-requests
 
+def access_multi_v1(ids, mode=None):
+    """
+    multiprocessing
+
+    for 50 ligands, 192s to get all confdata
+
+    """
+
+    if mode not in ['data', 'confdata', 'energy']:
+        raise ValueError('unknown mode; choose between confdata, data, energy')
+
+    args = zip(ids, itertools.repeat(mode), itertools.repeat(0))  # zipped args for multiprocessing
+
+    with multiprocessing.Pool(8) as p:  # num_workers goes with number of cores of computer
+        datas = p.starmap(access, args)
+
+    return datas
+
+
+def access_multi_v2():
+    # persistent http session
+    # https://docs.python-requests.org/en/master/user/advanced/#session-objects
+    return None
+
+
+def access_vburmin_conf(id):
+    # TODO: this is slow. Working on access_multi()
+
+    data = access(id, mode='data', verbose=0)
+    if data is None:
+        return None
+    else:
+        vburmin_conf = data['vburminconf']
+        del data
+        confdata = access(id, mode='confdata', verbose=0)
+        vburmin_confdata = confdata[vburmin_conf]
+
+    return vburmin_confdata
+
+
+def _access_test():
+    # Access_multi_v1: 60.582969332999994s
+    # For loop with access(): 265.57729820400004s
+
+    with open('buchwald/buchwald_found.json', 'r') as f:
+        bids = json.load(f)
+
+    test_list = bids[0:50]
+
+    start = timeit.default_timer()
+    access_multi_v1(test_list, mode='confdata')
+    print('Access_multi_v1: {0}s'.format(timeit.default_timer() - start))
+
+    start = timeit.default_timer()
+    for l in test_list:
+        access(l, mode='confdata')
+    print('For loop with access(): {0}s'.format(timeit.default_timer() - start))
+
+    return None
 
 
 # for testing only
-
 if __name__ == '__main__':
 
+    _access_test()
 
+    # data = access_multi_v1(bids, mode='data')
 
-    with open('buchwald/buchwald.json', 'r') as f:
-        bids = json.load(f)
+    #print(data[1])
 
-    found_list, not_found_list = access_vburmin_conf(bids)
-
-    with open('buchwald/buchwald_found.json', 'w') as f:
-        json.dump(found_list, f)
-
-    with open('buchwald/buchwald_not_found.json', 'w') as f:
-        json.dump(not_found_list, f)
-
-    pass
-
+    #access_multi_v1(bids, mode='energy')
+    
+    # with open('buchwald/buchwald_found.json', 'r') as f:
+    #     bids = json.load(f)
+    
     # values = ['cyjohnphos', 'brett', 'pcy3', 'pph3']
     # identifier = 'name'
     # print(
-    #     lookup_list(values=values, identifier=identifier)
+    #     lookup_multi(values=values, identifier=identifier)
     # )
 
     # print(lookup(keywords=['Ph', 'tBu', 'OMe', 'jason']))
