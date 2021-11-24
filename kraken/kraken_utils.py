@@ -333,10 +333,30 @@ def featurize_ligand(id):
     return None
 
 
-def fetch_xyz(id, conf_name):
+def fetch_xyz(id, conf_name, file_path, metal='Ni'):
+    """
+    for a conformer, write .xyz file
+
+    :param id: kraken id
+    :type id: int
+    :param conf_name: name of the conformer
+    :type conf_name: str
+    :param file_path: file path to save .xyz file
+    :type file_path: str
+    :param metal: metal center used in calculation
+    :type metal: str
+    :return: string block that goes into the xyz file (in case you don't want to write to file)
+    :rtype: str
+    """
     data = access_one_conf(str(id) + ':' + conf_name)
-    coords = data['coords']
-    elements = data['elements']
+    if metal == 'Ni':
+        coords = data['coords']
+        elements = data['elements']
+    elif metal == 'Pd':
+        coords = data['coords_pd']
+        elements = data['elements_pd']
+    else:
+        raise ValueError('Ni or Pd for metal center')
 
     xyz = str(len(coords)) + '\n'
     xyz += str(id) + ' ' + conf_name + '\n'
@@ -345,9 +365,10 @@ def fetch_xyz(id, conf_name):
         s = ' '.join(str_ints)
         xyz += elements[ii] + ' ' + s + '\n'
 
-    print(xyz)
+    with open(file_path, 'w') as f:
+        f.write(xyz)
 
-    return None
+    return xyz
 
 
 def _access_with_persistent_http(k_ids, mode=None, verbose=1):
@@ -417,7 +438,7 @@ def _access_speed_test():
 # for testing only
 if __name__ == '__main__':
 
-    fetch_xyz(1, '00000001_Ni_00014')
+    fetch_xyz(1, '00000001_Ni_00014', './scratch/test.xyz', metal='Pd')
 
     # data = access(4, mode='confdata')
     # print(data.keys())
