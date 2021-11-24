@@ -245,22 +245,24 @@ def access(k_id, mode=None, verbose=1):
     full_id = str(k_id).zfill(8)
 
     r = requests.get(github_url + full_id + suffix)
-    if r.status_code == 404:
-        if verbose:
-            print('ligand {0} not found'.format(full_id))
-        return None
-    elif r.status_code == 200:
+    if r.status_code == 200:
         if mode == 'energy':
             return pd.read_csv(StringIO(r.text), delimiter=';')
         else:
             return yaml.load(r.text, Loader=yaml.Loader)
+    elif r.status_code == 404:
+        if verbose:
+            print('ligand {0} not found'.format(full_id))
+        return None
     else:
         raise ConnectionError('unknown networking issue, status code {0}'.format(r.status_code))
 
 
 def access_one_conf(id_and_conf, mode='confdata', verbose=1):
     """
-    Hacks it, combines id and conf into one argument. Need to parse the string (use : as delimiter)
+    Access data for one conformer
+    Hacks it, combines id and conf into one argument.
+    Note: Need to parse the string (use : as delimiter when combining id and conf_name)
 
     :param id_and_conf:
     :param mode:
@@ -278,13 +280,13 @@ def access_one_conf(id_and_conf, mode='confdata', verbose=1):
     full_id = str(id).zfill(8)
 
     r = requests.get(github_url + full_id + suffix)
-    if r.status_code == 404:
+    if r.status_code == 200:
+        data = yaml.load(r.text, Loader=yaml.Loader)
+        return data[conf]
+    elif r.status_code == 404:
         if verbose:
             print('ligand {0} not found'.format(full_id))
         return None
-    elif r.status_code == 200:
-        data = yaml.load(r.text, Loader=yaml.Loader)
-        return data[conf]
     else:
         raise ConnectionError('unknown networking issue, status code {0}'.format(r.status_code))
 
@@ -323,6 +325,29 @@ def access_multi(ids, access_func=access, mode=None, howmanycores=8):
     # maybe get ids_yes_data from data_filtered.keys(), then do a set difference with ids to get ids_no_data
 
     return data_filtered, ids_no_data
+
+
+def featurize_ligand(id):
+    """TODO: for each ligand, create a dataframe with conformer name as rows, properties as column"""
+
+    return None
+
+
+def fetch_xyz(id, conf_name):
+    data = access_one_conf(str(id) + ':' + conf_name)
+    coords = data['coords']
+    elements = data['elements']
+
+    xyz = str(len(coords)) + '\n'
+    xyz += str(id) + ' ' + conf_name + '\n'
+    for ii in range(len(elements)):
+        str_ints = [str(t) for t in coords[ii]]
+        s = ' '.join(str_ints)
+        xyz += elements[ii] + ' ' + s + '\n'
+
+    print(xyz)
+
+    return None
 
 
 def _access_with_persistent_http(k_ids, mode=None, verbose=1):
@@ -392,11 +417,16 @@ def _access_speed_test():
 # for testing only
 if __name__ == '__main__':
 
-    with open('buchwald/buchwald.json', 'r') as f:
-        bids = json.load(f)
+    fetch_xyz(1, '00000001_Ni_00014')
 
-    data, ids = access_multi(bids, mode='energy')
-    print(data[1])
+    # data = access(4, mode='confdata')
+    # print(data.keys())
+
+    # with open('buchwald/buchwald.json', 'r') as f:
+    #     bids = json.load(f)
+    #
+    # data, ids = access_multi(bids, mode='energy')
+    # print(data[1])
 
     # output, l = access_multi([1, 2, 359, 360], mode='data')
     # print(l)
