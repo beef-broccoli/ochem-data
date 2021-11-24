@@ -258,6 +258,37 @@ def access(k_id, mode=None, verbose=1):
         raise ConnectionError('unknown networking issue, status code {0}'.format(r.status_code))
 
 
+def access_one_conf(id_and_conf, mode='confdata', verbose=1):
+    """
+    Hacks it, combines id and conf into one argument. Need to parse the string (use : as delimiter)
+
+    :param id_and_conf:
+    :param mode:
+    :param verbose:
+    :return:
+    """
+
+    github_url = 'https://raw.githubusercontent.com/doyle-lab-ucla/krkn/main/raw/'
+
+    mode = 'confdata'
+    suffix = '_confdata.yml'
+
+    id, conf = id_and_conf.split(':')
+
+    full_id = str(id).zfill(8)
+
+    r = requests.get(github_url + full_id + suffix)
+    if r.status_code == 404:
+        if verbose:
+            print('ligand {0} not found'.format(full_id))
+        return None
+    elif r.status_code == 200:
+        data = yaml.load(r.text, Loader=yaml.Loader)
+        return data[conf]
+    else:
+        raise ConnectionError('unknown networking issue, status code {0}'.format(r.status_code))
+
+
 def access_multi(ids, access_func=access, mode=None, howmanycores=8):
     """
     Access the data for a list ligands. Use multiprocessing to speed up access()
@@ -277,13 +308,13 @@ def access_multi(ids, access_func=access, mode=None, howmanycores=8):
         - ids_with_no_data - a list of ids(int) with no data available
     """
 
-    if mode not in ['data', 'confdata', 'energy']:
+    if mode not in ['confdata', 'data', 'energy']:
         raise ValueError('unknown mode; choose between confdata, data, energy')
 
     args = zip(ids, itertools.repeat(mode), itertools.repeat(0))  # zipped args for multiprocessing
 
     with multiprocessing.Pool(howmanycores) as p:  # num_workers goes with number of cores of computer
-        datas = p.starmap(access_func, args)  # TODO: make sure customized access function use same args
+        datas = p.starmap(access_func, args)
 
     data = dict(zip(ids, datas))  # outputs a dict with None
     ids_no_data = [k for k, v in data.items() if v is None]
@@ -292,29 +323,6 @@ def access_multi(ids, access_func=access, mode=None, howmanycores=8):
     # maybe get ids_yes_data from data_filtered.keys(), then do a set difference with ids to get ids_no_data
 
     return data_filtered, ids_no_data
-
-
-def access_vburmin_conf(ids):
-
-    data, ids_no_data = access_multi(ids, mode='data')
-    ids_yes_data = list(data.keys())
-
-    vburmin_conf_names = {}
-    for id in ids_yes_data:
-        vburmin_conf_names[id] = data[id]['vburminconf']
-
-    # TODO: too slow, probably due to read/write too many files.
-    #  need to write customized access function to only fetch info that is needed.
-
-    def access_one_conformer_data():
-        return None
-
-    data, _ = access_multi(ids_yes_data, mode='confdata')
-    temp = data[1][vburmin_conf_names[1]]
-
-    print(temp)
-
-    return None
 
 
 def _access_with_persistent_http(k_ids, mode=None, verbose=1):
