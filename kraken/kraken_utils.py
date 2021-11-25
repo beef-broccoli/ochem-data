@@ -10,8 +10,6 @@ import numpy as np
 from rdkit import Chem
 import rdkit.Chem.rdMolDescriptors as rdMolDescriptors
 
-pd.set_option("display.max_rows", None, "display.max_columns", None, 'display.max_colwidth', None)
-
 
 def lookup(cas=None, name=None, smiles=None, inchi=None, keywords=None, verbose=1):
     """
@@ -193,6 +191,8 @@ def lookup_multi(values, identifier):
     :return:
     """
 
+    pd.set_option("display.max_rows", None, "display.max_columns", None, 'display.max_colwidth', None)
+
     if identifier not in ['cas', 'name', 'smiles', 'inchi']:
         raise ValueError('identifier needs to be cas, name, smiles or inchi. (keyword is not supported)')
 
@@ -258,7 +258,7 @@ def access(k_id, mode=None, verbose=1):
         raise ConnectionError('unknown networking issue, status code {0}'.format(r.status_code))
 
 
-def access_one_conf(id_and_conf, mode='confdata', verbose=1):
+def access_one_conf(id_and_conf, mode, verbose=1):
     """
     Access data for one conformer
     Hacks it, combines id and conf into one argument.
@@ -328,9 +328,29 @@ def access_multi(ids, access_func=access, mode=None, howmanycores=8):
 
 
 def featurize_ligand(id):
-    """TODO: for each ligand, create a dataframe with conformer name as rows, properties as column"""
+    """
+    for each ligand, create a dataframe with conformer name as rows, properties as column
 
-    return None
+    :param id: kraken id for ligand
+    :type id: int
+    :return: dataframe with conformer name as rows and properties as columns
+    :rtype: pandas.core.frame.DataFrame
+    """
+
+    data = access(id, mode='confdata')
+
+    energy_param_list = ['e_dz', 'e_tz_gas', 'e_tz_solv', 'g', 'g_tz_gas', 'g_tz_solv']
+
+    # flatten dictionaries. Output dict: first keys conf_name, second keys feature name
+    filtered_data = {}
+    for conf, confdata in data.items():
+        energies = {l: confdata[l] for l in energy_param_list}
+        properties = confdata['properties']
+        filtered_data[conf] = {**energies, **properties}
+
+    df = pd.DataFrame.from_dict(filtered_data, orient='index')
+
+    return df
 
 
 def fetch_xyz(id, conf_name, file_path, metal='Ni'):
@@ -348,6 +368,7 @@ def fetch_xyz(id, conf_name, file_path, metal='Ni'):
     :return: string block that goes into the xyz file (in case you don't want to write to file)
     :rtype: str
     """
+
     data = access_one_conf(str(id) + ':' + conf_name)
     if metal == 'Ni':
         coords = data['coords']
@@ -438,7 +459,9 @@ def _access_speed_test():
 # for testing only
 if __name__ == '__main__':
 
-    fetch_xyz(1, '00000001_Ni_00014', './scratch/test.xyz', metal='Pd')
+    featurize_ligand(1)
+
+    #fetch_xyz(1, '00000001_Ni_00014', './scratch/test.xyz', metal='Pd')
 
     # data = access(4, mode='confdata')
     # print(data.keys())
