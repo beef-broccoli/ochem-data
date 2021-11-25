@@ -258,7 +258,7 @@ def access(k_id, mode=None, verbose=1):
         raise ConnectionError('unknown networking issue, status code {0}'.format(r.status_code))
 
 
-def access_one_conf(id_and_conf, mode, verbose=1):
+def access_one_conf(id_and_conf, mode='confdata', verbose=1):
     """
     Access data for one conformer
     Hacks it, combines id and conf into one argument.
@@ -353,7 +353,7 @@ def featurize_ligand(id):
     return df
 
 
-def fetch_xyz(id, conf_name, file_path, metal='Ni'):
+def fetch_xyz(id, conf_name, file_path=None, metal='Ni'):
     """
     for a conformer, write .xyz file
 
@@ -386,8 +386,9 @@ def fetch_xyz(id, conf_name, file_path, metal='Ni'):
         s = ' '.join(str_ints)
         xyz += elements[ii] + ' ' + s + '\n'
 
-    with open(file_path, 'w') as f:
-        f.write(xyz)
+    if file_path is not None:
+        with open(file_path, 'w') as f:
+            f.write(xyz)
 
     return xyz
 
