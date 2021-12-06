@@ -126,7 +126,18 @@ def lookup(cas=None, name=None, smiles=None, inchi=None, keywords=None, verbose=
         if type(smiles) != str:
             raise TypeError('Search value must be a string!')
 
-        temp_df = search_by_smiles(smiles)
+        # catch invalid smiles
+        # Note: rdkit will throw an error for invalid smiles. Since warnings are done at C++ level, there is no easy
+        # way to catch it in python. The function still runs.
+        # Try:
+        #   import rdkit.RDLogger
+        #   RDLogger.DisableLog('rdapp.*')
+
+        m = Chem.MolFromSmiles(smiles)
+        if m is None:
+            temp_df = pd.DataFrame()
+        else:
+            temp_df = search_by_smiles(smiles)
         results_df = pd.concat([results_df, temp_df])
 
         if len(results_df) == 1:  # only find one entry, return search result
@@ -179,7 +190,7 @@ def lookup(cas=None, name=None, smiles=None, inchi=None, keywords=None, verbose=
     return results_df[['ligand', 'id', 'can_smiles']]
 
 
-def lookup_multi(values, identifier):
+def lookup_multi(values, identifier, dataspell=False):
     """
     Builds on top of lookup()
     Input: a list of identifier values, type of identifiers
@@ -188,10 +199,11 @@ def lookup_multi(values, identifier):
 
     :param values:
     :param identifier:
+    :param dataspell: if this notebook is run in dataspell (better pandas table rendering, no need to display all)
     :return:
     """
-
-    pd.set_option("display.max_rows", None, "display.max_columns", None, 'display.max_colwidth', None)
+    if dataspell is False:
+        pd.set_option("display.max_rows", None, "display.max_columns", None, 'display.max_colwidth', None)
 
     if identifier not in ['cas', 'name', 'smiles', 'inchi']:
         raise ValueError('identifier needs to be cas, name, smiles or inchi. (keyword is not supported)')
@@ -477,10 +489,10 @@ if __name__ == '__main__':
     # print(l)
 
     #access_multi_v1(bids, mode='energy')
-    
+
     # with open('buchwald/buchwald_found.json', 'r') as f:
     #     bids = json.load(f)
-    
+
     # values = ['cyjohnphos', 'brett', 'pcy3', 'pph3']
     # identifier = 'name'
     # print(

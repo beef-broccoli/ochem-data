@@ -5,7 +5,8 @@
 /CN/process.py
 /prep/
 dev.txt
-/**/raw
-/scratch.py/
+**/raw/
+**/scratch.py/
 /todo/
-/scratch/
+**/scratch/
+**/.ipynb_checkpoints/
