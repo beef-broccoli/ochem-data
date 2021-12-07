@@ -2,7 +2,6 @@ import requests
 from io import StringIO
 import multiprocessing
 import itertools
-import timeit
 import yaml
 import json
 import pandas as pd
@@ -111,7 +110,7 @@ def lookup(cas=None, name=None, smiles=None, inchi=None, keywords=None, verbose=
 
         # no exact match, search for partial match
         if len(results) == 0:
-            results = [n for n in name_list if name.lower() in n.lower()]
+            results = [n for n in name_list if (name.lower() in n.lower()) or (n.lower() in name.lower())]
 
         if results:
             temp_df = identifiers[identifiers['ligand'].isin(results)]
@@ -213,7 +212,9 @@ def lookup_multi(values, identifier, dataspell=False):
         d = {identifier: val,
              'verbose': 0}
         lookup_result = lookup(**d)
-        if len(lookup_result) == 1:
+        if lookup_result is None:  # no results, return original value
+            results.append(val)
+        elif len(lookup_result) == 1:
             results.append(lookup_result['id'].values[0])
         else:  # no single match, return original identifier value
             print('For ligand with \"{0}\" \"{1}\", no match is found. Here are some possibilities:'.format(identifier, val))
@@ -224,6 +225,9 @@ def lookup_multi(values, identifier, dataspell=False):
             else:
                 results.append(val)
 
+    pd.reset_option("display.max_rows")
+    pd.reset_option("display.max_columns")
+    pd.reset_option('display.max_colwidth')
     return results
 
 
@@ -365,6 +369,27 @@ def featurize_ligand(id):
     return df
 
 
+def featurize(ids):
+
+    """
+    For a list of ligands, create a dataframe with ligand id as rows, properties as column
+
+    :param ids:
+    :return:
+    """
+
+    # TODO: select features: sterics, electronics, interactions...
+    # TODO: scale, corr analysis
+
+    features = pd.read_csv('kraken_features_only.csv')
+
+    feature_ids = set(features['id'])
+    query_ids = set(ids)
+    no_data = query_ids.difference(feature_ids)
+
+    return features.loc[features['id'].isin(ids)], no_data
+
+
 def fetch_xyz(id, conf_name, file_path=None, metal='Ni'):
     """
     for a conformer, write .xyz file
@@ -472,7 +497,7 @@ def _access_speed_test():
 # for testing only
 if __name__ == '__main__':
 
-    featurize_ligand(1)
+    print(featurize([1,2,3]))
 
     #fetch_xyz(1, '00000001_Ni_00014', './scratch/test.xyz', metal='Pd')
 

@@ -146,6 +146,113 @@ def _get_vbur(id_and_conf, mode, verbose=1):
         raise ConnectionError('unknown networking issue, status code {0}'.format(r.status_code))
 
 
+def merck_hte():
+
+    """
+    Written for notebook, some parts might look weird for a function
+
+    :return:
+    """
+
+    import json
+    from sklearn import linear_model
+    from sklearn import preprocessing
+    from kraken_utils import lookup_multi, featurize
+
+    # HTE data from Merck
+    data = pd.read_csv('https://raw.githubusercontent.com/beef-broccoli/ochem-data/main/Vbur/rxns/smiles.csv')
+
+    # Select one set of experiments
+    chloride_smiles = 'ClC1=CC=C(OC)C=C1'
+    boronic_acid_smiles = 'OB(O)C1=CC=C(C(F)(F)F)C=C1'
+    data = data.loc[(data['chloride_smiles'] == chloride_smiles) & (data['boronic_acid_smiles'] == boronic_acid_smiles)]
+    data = data[['ligand_smiles', 'ligand_name', 'yield']]
+
+    # lookup kraken ids for these ligands by name (smiles also work, not as well)
+    names = data['ligand_name'].to_list()
+    ids = lookup_multi(names, 'name')
+    # smi = data['ligand_smiles'].to_list()
+    # ids = lookup_multi(smi, 'smiles')
+    data['id'] = ids
+
+    # featurize
+    features, _ = featurize(ids)
+    Xs = features.drop(['id'], axis=1)
+    feature_names = list(Xs.columns)
+
+    # plot the reactivity threshold
+    with open('id_list/buchwald_found.json') as f:
+        b = json.load(f)
+    non_buchwald_ids = []
+    buchwald_ids = []
+    for i in ids:
+        if i in b:
+            buchwald_ids.append(i)
+        else:
+            non_buchwald_ids.append(i)
+
+    v_nb = [v/180*100 for v in list(features.loc[features['id'].isin(non_buchwald_ids)]['vbur_vbur_min'])]
+    y_nb = list(data.loc[data['id'].isin(non_buchwald_ids)]['yield'])
+    v_b = [v/180*100 for v in list(features.loc[features['id'].isin(buchwald_ids)]['vbur_vbur_min'])]
+    y_b = list(data.loc[data['id'].isin(buchwald_ids)]['yield'])
+    plt.scatter(v_nb, y_nb, zorder=3, label='non-buchwald ligand')
+    plt.scatter(v_b, y_b, zorder=4, label='buchwald ligand')
+    plt.axhline(10, c='k', linestyle='dashed', zorder=1)
+    plt.axvline(33, c='k', linestyle='dashed', zorder=2)
+    plt.xlabel('%Vbur(min)')
+    plt.ylabel('yield (%)')
+    plt.legend()
+
+    # Logistic regression with L1 penalty to select features
+    X = Xs.to_numpy()
+    X = preprocessing.StandardScaler().fit_transform(X)
+    y = np.array([i > 10 for i in list(data['yield'])]).astype(int)  # 10% yield as cutoff
+    clf = linear_model.LogisticRegressionCV(cv=5, solver='liblinear', penalty='l1').fit(X, y)
+    coeff = abs(clf.coef_[0, :])
+    n = sum(clf.coef_[0, :] != 0)  # how many non-zero features
+    selected_features = [x for _, x in sorted(zip(coeff, feature_names), reverse=True)]  # sorted by abs(coeff) for all coeff
+    selected_features = selected_features[:n]
+
+    # do LASSO regression again with the selected features
+    X = Xs[selected_features].to_numpy()
+    X = preprocessing.StandardScaler().fit_transform(X)
+    y = data['yield']
+    reg = linear_model.LassoCV(cv=5).fit(X, y)
+
+    # screen all kraken ligands
+    all = pd.read_csv('kraken_features_only.csv')
+    ids = all['id']
+    all = all.drop(['id'], axis=1)
+    all = all[selected_features]
+    all_X = preprocessing.StandardScaler().fit_transform(all.to_numpy())  # TODO: this is wrong. Should scale with training samples together
+    all_y_pred = reg.predict(all_X)
+    sorted_id_list = sorted(zip(all_y_pred, ids), reverse=True)
+
+    # select top-10 ligands
+    suggest = []
+    for i in range(10):
+        suggest.append(sorted_id_list[i][1])
+    identifiers = pd.read_csv('identifiers.csv')
+    suggest_names = identifiers.loc[identifiers['id'].isin(suggest)]['ligand']
+
+    # plot non-zero features
+    n = sum(np.array(reg.coef_) != 0)  # how many non-zero features
+    coeff = abs(reg.coef_)
+    ind = (-coeff).argsort()  # argsort() descending order
+    selected2_features = np.array(selected_features)[ind][:n]
+    weights = reg.coef_[ind][:n]
+
+    ys = np.arange(len(weights))
+    fig, ax = plt.subplots()
+    ax.barh(ys, weights)
+    ax.set_yticks(ys, labels=selected2_features)
+    ax.invert_yaxis()
+    ax.set_xlabel('coefficient')
+    ax.set_xticks(np.arange(int(min(weights))-1, int(max(weights))+1, 1))
+
+
+
 if __name__ == '__main__':
 
-    plot_vbur_min_boltz()
+    merck_hte()
+
