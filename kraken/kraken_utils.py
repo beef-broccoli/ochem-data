@@ -36,7 +36,7 @@ def lookup(cas=None, name=None, smiles=None, inchi=None, keywords=None, verbose=
     :rtype: pd.DataFrame
     """
 
-    identifiers = pd.read_csv('identifiers.csv')
+    identifiers = pd.read_csv('https://raw.githubusercontent.com/beef-broccoli/ochem-data/main/kraken/identifiers.csv')
     identifiers['id'] = identifiers['id'].astype('int')
     identifiers['atomcount'] = identifiers['atomcount'].astype('int')
     results_df = pd.DataFrame()
@@ -381,7 +381,7 @@ def featurize(ids):
     # TODO: select features: sterics, electronics, interactions...
     # TODO: scale, corr analysis
 
-    features = pd.read_csv('kraken_features_only.csv')
+    features = pd.read_csv('https://raw.githubusercontent.com/beef-broccoli/ochem-data/main/kraken/kraken_features_only.csv')
 
     feature_ids = set(features['id'])
     query_ids = set(ids)
