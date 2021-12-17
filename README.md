@@ -1,8 +1,8 @@
 # ochem-data
 This repo compiles published organic chemistry data, including raw data and calculated descriptor sets for molecules and reactions. 
 
-## Latest update: 
-- 11-07-2021: added a search function for kraken ID with cas number, name or smiles. Check out the [function](/kraken/kraken_utils.py) and [demo](/kraken/demo.ipynb)
+## Latest update:
+- 12-16-2021: kraken_utils hosts a series of functions to search, 
 
 ## File structure: 
 

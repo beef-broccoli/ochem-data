@@ -387,7 +387,13 @@ def featurize(ids):
     query_ids = set(ids)
     no_data = query_ids.difference(feature_ids)
 
-    return features.loc[features['id'].isin(ids)], no_data
+    features = features.loc[features['id'].isin(ids)]
+
+    # add a name for features, since resulting features are sorted by ids
+    identifiers = pd.read_csv('https://raw.githubusercontent.com/beef-broccoli/ochem-data/main/kraken/identifiers.csv')
+    features.insert(0, 'name', features['id'].apply(lambda x: identifiers.loc[identifiers['id'] == x]['ligand'].values[0]))
+
+    return features, no_data
 
 
 def fetch_xyz(id, conf_name, file_path=None, metal='Ni'):
@@ -496,6 +502,8 @@ def _access_speed_test():
 
 # for testing only
 if __name__ == '__main__':
+    # identifiers = pd.read_csv('https://raw.githubusercontent.com/beef-broccoli/ochem-data/main/kraken/identifiers.csv')
+    # print(identifiers.loc[identifiers['id'] == 3]['ligand'].values[0])
 
     print(featurize([1,2,3]))
 
