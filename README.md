@@ -1,9 +1,6 @@
 # ochem-data
 This repo compiles published organic chemistry data, including raw data and calculated descriptor sets for molecules and reactions. 
 
-## Latest update:
-- 12-16-2021: kraken_utils hosts a series of functions to search, 
-
 ## File structure: 
 
 Each folder contains one reaction (see publication list for details). 
