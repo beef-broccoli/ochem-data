@@ -49,7 +49,7 @@ Each subfolder (`ohe`, `mol2vec`, `mordred`...) includes different descriptor en
   <img src=https://github.com/beef-broccoli/misc-files/blob/9b3b3ef4a612c0aa232c0f5b138fa492823aa555/ochem-data/asym_epox_scheme.png alt=asym_epox width=600/>
 </p>
 
-- CH-aryl-1: [Bayesian reaction optimization as a tool for chemical synthesis](https://www.nature.com/articles/s41586-021-03213-y)
+- CH-aryl-conditions: [Bayesian reaction optimization as a tool for chemical synthesis](https://www.nature.com/articles/s41586-021-03213-y)
 
 <p align="center">
   <img src=https://github.com/beef-broccoli/misc-files/blob/cde79f8752feddfe23e346591c10aae826d403ac/ochem-data/CH-aryl-1_scheme.png alt=CHaryl-1 width=600/>
