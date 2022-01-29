@@ -1,4 +1,4 @@
-Electrophile_SMILES,Nucleophile_SMILES,Ligand_SMILES,Base_SMILES,Solvent_SMILES,yield
+electrophile_smiles,nucleophile_smiles,ligand_smiles,base_smiles,solvent_smiles,yield
 ClC1=CC=C(N=CC=C2)C2=C1,CC1=CC=C(N(C2CCCCO2)N=C3)C3=C1B(O)O,CC(P(C(C)(C)C)C(C)(C)C)(C)C,[Na+].[OH-],N#CC,4.76
 ClC1=CC=C(N=CC=C2)C2=C1,CC1=CC=C(N(C2CCCCO2)N=C3)C3=C1B(O)O,P(C1=CC=CC=C1)(C2=CC=CC=C2)C3=CC=CC=C3,[Na+].[OH-],N#CC,4.12
 ClC1=CC=C(N=CC=C2)C2=C1,CC1=CC=C(N(C2CCCCO2)N=C3)C3=C1B(O)O,CC(C)(C)P(C(C)(C)C)C1=CC=C(N(C)C)C=C1,[Na+].[OH-],N#CC,2.58

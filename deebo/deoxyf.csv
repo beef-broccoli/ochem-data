@@ -1,4 +1,4 @@
-base_SMILES,fluoride_SMILES,substrate_SMILES,yield
+base_smiles,fluoride_smiles,substrate_smiles,yield
 N12CCCN=C1CCCCC2,ClC1=CC=C(S(=O)(F)=O)C=C1,OCCCCC1=CC=CC=C1,42
 N12CCCN=C1CCCCC2,O=S(C1=CC=CC=N1)(F)=O,OCCCCC1=CC=CC=C1,48
 N12CCCN=C1CCCCC2,O=S(C1=CC=C(C(F)(F)F)C=C1)(F)=O,OCCCCC1=CC=CC=C1,47

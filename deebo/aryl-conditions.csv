@@ -1,4 +1,4 @@
-base_smiles,ligand_smiles,solvent_smiles,concentration,temp_c,yield
+base_smiles,ligand_smiles,solvent_smiles,other_concentration,other_temp,yield
 O=C([O-])C.[K+],CC(C)C1=CC(C(C)C)=C(C(C(C)C)=C1)C2=C(P(C3CCCCC3)C4CCCCC4)C(OC)=CC=C2OC,CC(N(C)C)=O,0.1,105,5.47
 O=C([O-])C.[K+],CC(C)(C)P(C1=CC=CC=C1)C(C)(C)C,CC(N(C)C)=O,0.1,105,0
 O=C([O-])C.[K+],CN(C)C1=CC=CC(N(C)C)=C1C2=CC=CC=C2P(C(C)(C)C)C3=CC=CC=C3,CC(N(C)C)=O,0.1,105,78.95
