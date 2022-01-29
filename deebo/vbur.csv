@@ -1,4 +1,4 @@
-﻿chloride_smiles,boronic_acid_smiles,ligand_smiles,ligand_name,time,product_smiles,yield
+﻿chloride_smiles,boronic_acid_smiles,ligand_smiles,ligand_name,time_,product_smiles,yield
 ClC1=CC=C(OC)C=C1,OB(O)C1=CC=C(C(F)(F)F)C=C1,CN(c1cccc(c1c1ccccc1P(C1CCCCC1)C1CCCCC1)N(C)C)C,CPhos,2.00,FC(C(C=C1)=CC=C1C2=CC=C(OC)C=C2)(F)F,3.00
 ClC1=CC=C(OC)C=C1,OB(O)C1=CC=C(C(F)(F)F)C=C1,C1CCC(CC1)P(c1ccccc1c1ccccc1)C1CCCCC1,CyJohnPhos,2.00,FC(C(C=C1)=CC=C1C2=CC=C(OC)C=C2)(F)F,67.00
 ClC1=CC=C(OC)C=C1,OB(O)C1=CC=C(C(F)(F)F)C=C1,C1[C@@H]2C[C@@H]3C[C@H]1C[C@](C2)(C3)P([C@]12C[C@H]3C[C@@H](C2)C[C@@H](C1)C3)[C@]12C[C@H]3C[C@@H](C2)C[C@@H](C1)C3,PAd3,2.00,FC(C(C=C1)=CC=C1C2=CC=C(OC)C=C2)(F)F,2.00
