@@ -25,7 +25,7 @@ Each subfolder (`ohe`, `mol2vec`, `mordred`...) includes different descriptor en
 
 ## Publications for reaction data: 
 
-- deoxyF: [Deoxyfluorination with Sulfonyl Fluorides: Navigating Reaction Space with Machine Learning](https://pubs.acs.org/doi/10.1021/jacs.8b01523)
+- [deoxyF](./deoxyF): [Deoxyfluorination with Sulfonyl Fluorides: Navigating Reaction Space with Machine Learning](https://pubs.acs.org/doi/10.1021/jacs.8b01523)
 
 <p align="center">
   <img src=https://github.com/beef-broccoli/misc-files/blob/f370f89ab3370839df18bd79fa1f89a091ada630/ochem-data/deoxyF_scheme.png alt=deoxyF width=600/>
