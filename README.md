@@ -55,10 +55,16 @@ Each subfolder (`ohe`, `mol2vec`, `mordred`...) includes different descriptor en
   <img src=https://github.com/beef-broccoli/misc-files/blob/cde79f8752feddfe23e346591c10aae826d403ac/ochem-data/CH-aryl-1_scheme.png alt=CHaryl-1 width=600/>
 </p>
 
-- Kraken: [A Comprehensive Discovery Platform for Organophosphorus Ligands for Catalysis](https://chemrxiv.org/engage/chemrxiv/article-details/60c757f9702a9bdb7018cbd4)
+- Kraken: [A Comprehensive Discovery Platform for Organophosphorus Ligands for Catalysis](https://doi.org/10.1021/jacs.1c09718)
 
 <p align="center">
   <img src=https://github.com/beef-broccoli/misc-files/blob/60475f1bcbec6d5c7d400e5f5dab6f06eb993aea/ochem-data/kraken_scheme.png alt=kraken width=600/>
+</p> 
+
+- NiB: [Advancing Base Metal Catalysis through Data Science: Insight and Predictive Models for Ni-Catalyzed Borylation through Supervised Machine Learning](https://doi.org/10.1021/acs.organomet.2c00089)
+
+<p align="center">
+  <img src=https://github.com/beef-broccoli/misc-files/blob/60475f1bcbec6d5c7d400e5f5dab6f06eb993aea/ochem-data/nickelbscheme.png alt=nib width=600/>
 </p> 
 
 ## Publications/resources for descriptor sets: 
