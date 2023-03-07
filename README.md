@@ -64,7 +64,7 @@ Each subfolder (`ohe`, `mol2vec`, `mordred`...) includes different descriptor en
 - NiB: [Advancing Base Metal Catalysis through Data Science: Insight and Predictive Models for Ni-Catalyzed Borylation through Supervised Machine Learning](https://doi.org/10.1021/acs.organomet.2c00089)
 
 <p align="center">
-  <img src=https://github.com/beef-broccoli/misc-files/blob/60475f1bcbec6d5c7d400e5f5dab6f06eb993aea/ochem-data/nickelbscheme.png alt=nib width=600/>
+  <img src=https://github.com/beef-broccoli/misc-files/blob/cb7be1ccaadb3b5a83a8b51d4c9495c25daabb8a/ochem-data/nickelbscheme.png alt=nib width=600/>
 </p> 
 
 ## Publications/resources for descriptor sets: 
