@@ -1,3 +1,0 @@
-In the reaction dataset, ligand 'PnBu3 HBF4' is missing three substrates.
-This can also be seen in the heatmap provided in the paper.
-All files with suffix '-32l' has this ligand removed.

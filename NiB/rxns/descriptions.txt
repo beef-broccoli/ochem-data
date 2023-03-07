@@ -1,0 +1,12 @@
+'inchi.csv':
+ligand "PnBu3 HBF4" only has 30 substrates
+substrates "5-chloroindole", "3-Chloro-2-methylaniline", "2-Chloro-m-xylene" were not run with this ligand
+overall: 33 substrates x 24 ligands x 2 solvents - 3 substrates x 1 ligands x 2 solvents = 1578 entries
+
+'inchi_32l.csv':
+ligand "PnBu3 HBF4" removed
+33 substrates x 23 ligands x 2 solvents = 1518 entries
+
+'inchi_val.csv'
+external validation set with
+2 used substrates x 12 new ligands x 2 solvents = 48 entries
