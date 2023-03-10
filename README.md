@@ -25,43 +25,43 @@ Each subfolder (`ohe`, `mol2vec`, `mordred`...) includes different descriptor en
 
 ## Publications for reaction data: 
 
-- deoxyF: [Deoxyfluorination with Sulfonyl Fluorides: Navigating Reaction Space with Machine Learning](https://pubs.acs.org/doi/10.1021/jacs.8b01523)
+- [deoxyF](./deoxyF): [Deoxyfluorination with Sulfonyl Fluorides: Navigating Reaction Space with Machine Learning](https://pubs.acs.org/doi/10.1021/jacs.8b01523)
 
 <p align="center">
   <img src=https://github.com/beef-broccoli/misc-files/blob/f370f89ab3370839df18bd79fa1f89a091ada630/ochem-data/deoxyF_scheme.png alt=deoxyF width=600/>
 </p>
 
-- Vbur: [Linking Mechanistic Analysis of Catalytic Reactivity Cliffs to Ligand Classification](https://chemrxiv.org/engage/chemrxiv/article-details/60c758aabdbb89d828a3ade9)
+- [Vbur](./Vbur): [Linking Mechanistic Analysis of Catalytic Reactivity Cliffs to Ligand Classification](https://chemrxiv.org/engage/chemrxiv/article-details/60c758aabdbb89d828a3ade9)
 
 <p align="center">
   <img src=https://github.com/beef-broccoli/misc-files/blob/cde79f8752feddfe23e346591c10aae826d403ac/ochem-data/Vbur_scheme.png alt=Vbur width=600/>
 </p>
 
-- CN: [Predicting reaction performance in C–N cross-coupling using machine learning](https://www.science.org/doi/full/10.1126/science.aar5169?versioned=true)
+- [CN](./CN): [Predicting reaction performance in C–N cross-coupling using machine learning](https://www.science.org/doi/full/10.1126/science.aar5169?versioned=true)
 
 <p align="center">
   <img src=https://github.com/beef-broccoli/misc-files/blob/cde79f8752feddfe23e346591c10aae826d403ac/ochem-data/CN_scheme.png alt=CN width=600/>
 </p>
 
-- asym_epox: [Ni/Photoredox-Catalyzed Enantioselective Cross-Electrophile Coupling of Styrene Oxides with Aryl Iodides](https://chemrxiv.org/engage/chemrxiv/article-details/60c7574abb8c1a7a333dc7d0)
+- [asym_epox](./asym_epox): [Ni/Photoredox-Catalyzed Enantioselective Cross-Electrophile Coupling of Styrene Oxides with Aryl Iodides](https://chemrxiv.org/engage/chemrxiv/article-details/60c7574abb8c1a7a333dc7d0)
 
 <p align="center">
   <img src=https://github.com/beef-broccoli/misc-files/blob/9b3b3ef4a612c0aa232c0f5b138fa492823aa555/ochem-data/asym_epox_scheme.png alt=asym_epox width=600/>
 </p>
 
-- CH-aryl-conditions: [Bayesian reaction optimization as a tool for chemical synthesis](https://www.nature.com/articles/s41586-021-03213-y)
+- [CH-aryl-conditions](./CH-aryl-conditions): [Bayesian reaction optimization as a tool for chemical synthesis](https://www.nature.com/articles/s41586-021-03213-y)
 
 <p align="center">
   <img src=https://github.com/beef-broccoli/misc-files/blob/cde79f8752feddfe23e346591c10aae826d403ac/ochem-data/CH-aryl-1_scheme.png alt=CHaryl-1 width=600/>
 </p>
 
-- Kraken: [A Comprehensive Discovery Platform for Organophosphorus Ligands for Catalysis](https://doi.org/10.1021/jacs.1c09718)
+- [kraken](./kraken): [A Comprehensive Discovery Platform for Organophosphorus Ligands for Catalysis](https://doi.org/10.1021/jacs.1c09718)
 
 <p align="center">
   <img src=https://github.com/beef-broccoli/misc-files/blob/60475f1bcbec6d5c7d400e5f5dab6f06eb993aea/ochem-data/kraken_scheme.png alt=kraken width=600/>
 </p> 
 
-- NiB: [Advancing Base Metal Catalysis through Data Science: Insight and Predictive Models for Ni-Catalyzed Borylation through Supervised Machine Learning](https://doi.org/10.1021/acs.organomet.2c00089)
+- [NiB](./NiB): [Advancing Base Metal Catalysis through Data Science: Insight and Predictive Models for Ni-Catalyzed Borylation through Supervised Machine Learning](https://doi.org/10.1021/acs.organomet.2c00089)
 
 <p align="center">
   <img src=https://github.com/beef-broccoli/misc-files/blob/cb7be1ccaadb3b5a83a8b51d4c9495c25daabb8a/ochem-data/nickelbscheme.png alt=nib width=600/>
